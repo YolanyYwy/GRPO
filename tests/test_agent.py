@@ -1,7 +1,7 @@
 import pytest
 
-from tau2.agent.llm_agent import LLMAgent, LLMSoloAgent
-from tau2.data_model.message import AssistantMessage, UserMessage
+from AGentCL.agent.llm_agent import LLMAgent, LLMSoloAgent
+from AGentCL.data_model.message import AssistantMessage, UserMessage
 
 
 @pytest.fixture

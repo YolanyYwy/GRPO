@@ -14,11 +14,11 @@ def test_data_dir_environment_variable():
             # Re-import to get the new DATA_DIR value
             import importlib
 
-            import tau2.utils.utils
+            import AGentCL.utils.utils
 
-            importlib.reload(tau2.utils.utils)
+            importlib.reload(AGentCL.utils.utils)
 
-            assert tau2.utils.utils.DATA_DIR == temp_data_dir
+            assert AGentCL.utils.utils.DATA_DIR == temp_data_dir
 
 
 def test_data_dir_fallback_to_source():
@@ -28,12 +28,12 @@ def test_data_dir_fallback_to_source():
         # Re-import to get the fallback DATA_DIR value
         import importlib
 
-        import tau2.utils.utils
+        import AGentCL.utils.utils
 
-        importlib.reload(tau2.utils.utils)
+        importlib.reload(AGentCL.utils.utils)
 
         # Check that DATA_DIR points to the source directory
         # Calculate expected path from utils.py location
-        utils_file = Path(tau2.utils.utils.__file__)
+        utils_file = Path(AGentCL.utils.utils.__file__)
         expected_source_dir = utils_file.parents[3] / "data"
-        assert tau2.utils.utils.DATA_DIR == expected_source_dir
+        assert AGentCL.utils.utils.DATA_DIR == expected_source_dir

@@ -1,6 +1,6 @@
 import pytest
 
-from tau2.domains.telecom.user_data_model import (
+from AGentCL.domains.telecom.user_data_model import (
     APNNames,
     APNSettings,
     AppPermissions,
@@ -16,7 +16,7 @@ from tau2.domains.telecom.user_data_model import (
     UserSurroundings,
     VpnDetails,
 )
-from tau2.domains.telecom.user_tools import TelecomUserTools
+from AGentCL.domains.telecom.user_tools import TelecomUserTools
 
 
 @pytest.fixture

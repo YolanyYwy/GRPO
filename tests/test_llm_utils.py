@@ -1,14 +1,14 @@
 import pytest
 
-from tau2.data_model.message import (
+from AGentCL.data_model.message import (
     AssistantMessage,
     Message,
     SystemMessage,
     ToolMessage,
     UserMessage,
 )
-from tau2.environment.tool import Tool, as_tool
-from tau2.utils.llm_utils import generate
+from AGentCL.environment.tool import Tool, as_tool
+from AGentCL.utils.llm_utils import generate
 
 
 @pytest.fixture

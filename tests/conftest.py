@@ -2,10 +2,10 @@ from typing import Callable
 
 import pytest
 
-from tau2.data_model.tasks import Task
-from tau2.environment.environment import Environment
-from tau2.registry import registry
-from tau2.run import get_tasks
+from AGentCL.data_model.tasks import Task
+from AGentCL.environment.environment import Environment
+from AGentCL.registry import registry
+from AGentCL.run import get_tasks
 
 
 @pytest.fixture

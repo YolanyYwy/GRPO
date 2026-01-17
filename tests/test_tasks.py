@@ -2,9 +2,9 @@ import json
 
 import pytest
 
-from tau2.run import get_tasks
-from tau2.utils import DATA_DIR
-from tau2.utils.utils import get_dict_hash, show_dict_diff
+from AGentCL.run import get_tasks
+from AGentCL.utils import DATA_DIR
+from AGentCL.utils.utils import get_dict_hash, show_dict_diff
 
 
 @pytest.fixture

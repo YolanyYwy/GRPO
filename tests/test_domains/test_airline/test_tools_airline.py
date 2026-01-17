@@ -3,10 +3,10 @@ import json
 import pytest
 from loguru import logger
 
-from tau2.data_model.message import ToolCall, ToolMessage
-from tau2.domains.airline.data_model import FlightDB, FlightInfo, Passenger, Payment
-from tau2.domains.airline.environment import get_environment
-from tau2.environment.environment import Environment
+from AGentCL.data_model.message import ToolCall, ToolMessage
+from AGentCL.domains.airline.data_model import FlightDB, FlightInfo, Passenger, Payment
+from AGentCL.domains.airline.environment import get_environment
+from AGentCL.environment.environment import Environment
 
 
 @pytest.fixture

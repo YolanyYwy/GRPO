@@ -2,8 +2,8 @@ import json
 
 import pytest
 
-from tau2.data_model.message import ToolCall
-from tau2.domains.retail.data_model import (
+from AGentCL.data_model.message import ToolCall
+from AGentCL.domains.retail.data_model import (
     CreditCard,
     GiftCard,
     Order,
@@ -16,8 +16,8 @@ from tau2.domains.retail.data_model import (
     UserName,
     Variant,
 )
-from tau2.domains.retail.environment import get_environment
-from tau2.environment.environment import Environment
+from AGentCL.domains.retail.environment import get_environment
+from AGentCL.environment.environment import Environment
 
 
 @pytest.fixture

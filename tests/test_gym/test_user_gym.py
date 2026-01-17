@@ -2,8 +2,8 @@
 
 import pytest
 
-from tau2.data_model.message import UserMessage
-from tau2.gym.gym_agent import UserGymEnv
+from AGentCL.data_model.message import UserMessage
+from AGentCL.gym.gym_agent import UserGymEnv
 
 
 def test_user_gym_env_init():
@@ -66,7 +66,7 @@ def test_user_gym_env_step():
 
 def test_gym_user_properties():
     """Test GymUser properties."""
-    from tau2.gym.gym_agent import GymUser
+    from AGentCL.gym.gym_agent import GymUser
 
     user = GymUser(tools=None, instructions="Test instructions")
 
@@ -92,8 +92,8 @@ def test_user_gym_env_no_solo_mode():
 
 def test_gym_user_stop_tokens():
     """Test that GymUser correctly detects stop tokens."""
-    from tau2.data_model.message import UserMessage
-    from tau2.gym.gym_agent import GymUser
+    from AGentCL.data_model.message import UserMessage
+    from AGentCL.gym.gym_agent import GymUser
 
     # Test STOP token
     msg_stop = UserMessage(role="user", content="Thanks, that's perfect! ###STOP###")
@@ -126,7 +126,7 @@ def test_gym_user_stop_tokens():
 
 def test_user_gym_env_tool_call_parsing():
     """Test that UserGymEnv correctly parses user tool calls with requestor='user'."""
-    from tau2.utils.tools import parse_action_string
+    from AGentCL.utils.tools import parse_action_string
 
     # Test functional tool call is parsed as UserMessage with correct requestor
     action = "check_status_bar()"

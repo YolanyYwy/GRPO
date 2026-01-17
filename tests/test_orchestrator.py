@@ -3,16 +3,16 @@ from typing import Callable
 
 import pytest
 
-from tau2.agent.llm_agent import LLMAgent, LLMSoloAgent
-from tau2.data_model.message import AssistantMessage, UserMessage
-from tau2.data_model.tasks import EnvAssertion, InitialState, Task
-from tau2.environment.environment import Environment
-from tau2.orchestrator.orchestrator import (
+from AGentCL.agent.llm_agent import LLMAgent, LLMSoloAgent
+from AGentCL.data_model.message import AssistantMessage, UserMessage
+from AGentCL.data_model.tasks import EnvAssertion, InitialState, Task
+from AGentCL.environment.environment import Environment
+from AGentCL.orchestrator.orchestrator import (
     DEFAULT_FIRST_AGENT_MESSAGE,
     Orchestrator,
     Role,
 )
-from tau2.user.user_simulator import DummyUser, UserSimulator
+from AGentCL.user.user_simulator import DummyUser, UserSimulator
 
 
 @pytest.fixture
@@ -426,7 +426,7 @@ def test_validate_communication_catches_empty_message(
     get_environment: Callable[[], Environment],
 ):
     """Test that empty messages are caught when validation is enabled."""
-    from tau2.data_model.simulation import TerminationReason
+    from AGentCL.data_model.simulation import TerminationReason
 
     orchestrator = Orchestrator(
         domain=domain_name,
@@ -459,8 +459,8 @@ def test_validate_communication_catches_mixed_message(
     get_environment: Callable[[], Environment],
 ):
     """Test that mixed messages (text + tool calls) are caught when validation is enabled."""
-    from tau2.data_model.message import ToolCall
-    from tau2.data_model.simulation import TerminationReason
+    from AGentCL.data_model.message import ToolCall
+    from AGentCL.data_model.simulation import TerminationReason
 
     orchestrator = Orchestrator(
         domain=domain_name,

@@ -2,21 +2,21 @@ from typing import Callable
 
 import pytest
 
-from tau2.data_model.message import (
+from AGentCL.data_model.message import (
     AssistantMessage,
     Message,
     ToolCall,
     ToolMessage,
     UserMessage,
 )
-from tau2.data_model.tasks import (
+from AGentCL.data_model.tasks import (
     EnvAssertion,
     EnvFunctionCall,
     InitializationData,
 )
-from tau2.environment.environment import Environment
-from tau2.environment.tool import Tool
-from tau2.environment.toolkit import ToolKitBase, ToolType, is_tool
+from AGentCL.environment.environment import Environment
+from AGentCL.environment.tool import Tool
+from AGentCL.environment.toolkit import ToolKitBase, ToolType, is_tool
 
 
 @pytest.fixture

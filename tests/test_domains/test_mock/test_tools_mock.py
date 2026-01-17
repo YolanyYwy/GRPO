@@ -1,9 +1,9 @@
 import pytest
 
-from tau2.data_model.message import ToolCall
-from tau2.domains.mock.data_model import MockDB, Task, User
-from tau2.domains.mock.environment import get_environment
-from tau2.environment.environment import Environment
+from AGentCL.data_model.message import ToolCall
+from AGentCL.domains.mock.data_model import MockDB, Task, User
+from AGentCL.domains.mock.environment import get_environment
+from AGentCL.environment.environment import Environment
 
 
 @pytest.fixture

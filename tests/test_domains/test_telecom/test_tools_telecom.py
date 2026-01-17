@@ -4,9 +4,9 @@ import unittest
 from datetime import date
 from pathlib import Path
 
-from tau2.domains.telecom.data_model import LineStatus, TelecomDB
-from tau2.domains.telecom.tools import TelecomTools
-from tau2.domains.telecom.utils import get_now, get_today
+from AGentCL.domains.telecom.data_model import LineStatus, TelecomDB
+from AGentCL.domains.telecom.tools import TelecomTools
+from AGentCL.domains.telecom.utils import get_now, get_today
 
 # Path to the telecom database file
 TELECOM_DB_PATH = (
