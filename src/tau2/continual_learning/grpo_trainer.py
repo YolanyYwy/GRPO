@@ -21,6 +21,7 @@ from .metrics_tracker import MetricsTracker
 from .policy_model import PolicyModel
 from .reward_oracle import RewardOracle
 from .trajectory_buffer import TrajectoryBuffer
+from .trajectory_logger import TrajectoryLogger
 
 
 class GRPOTrainer:
@@ -88,6 +89,18 @@ class GRPOTrainer:
             self.metrics = MetricsTracker(config)
         else:
             self.metrics = None
+
+        # Trajectory logger (only on main process)
+        if self.is_main_process():
+            trajectory_log_dir = Path(config.log_dir) / "trajectory_logs"
+            self.trajectory_logger = TrajectoryLogger(
+                log_dir=str(trajectory_log_dir),
+                enabled=config.save_trajectory_logs,
+            )
+            if config.save_trajectory_logs:
+                print(f"Trajectory logs will be saved to: {trajectory_log_dir}")
+        else:
+            self.trajectory_logger = None
 
         # Continual learning algorithm
         self.cl_algorithm = self._create_cl_algorithm()
@@ -264,7 +277,7 @@ class GRPOTrainer:
             batch = self._sample_batch(train_tasks, domain)
 
             # Train step
-            metrics = self.train_step(batch, domain)
+            metrics = self.train_step(batch, domain, step)
 
             # Log metrics (main process only)
             if self.is_main_process() and metrics:
@@ -293,7 +306,7 @@ class GRPOTrainer:
             eval_metrics = self.evaluate_task(domain)
             self.metrics.log_eval(task_idx, self.config.num_steps_per_task, eval_metrics)
 
-    def train_step(self, batch: list[Task], domain: str) -> Optional[dict]:
+    def train_step(self, batch: list[Task], domain: str, step: int = 0) -> Optional[dict]:
         """Single training step with GRPO and gradient accumulation.
 
         Args:
@@ -367,13 +380,26 @@ class GRPOTrainer:
                 continue
 
             # 6. Store trajectories in buffer
-            for traj, reward in zip(trajectories, rewards):
+            for sample_idx, (traj, reward) in enumerate(zip(trajectories, rewards)):
                 self.trajectory_buffer.add(
                     domain=domain,
                     task=task,
                     trajectory=traj,
                     reward=reward,
                 )
+
+                # Log trajectory to file (main process only, based on interval)
+                if (self.is_main_process() and
+                    self.trajectory_logger and
+                    step % self.config.trajectory_log_interval == 0):
+                    self.trajectory_logger.log_trajectory(
+                        task=task,
+                        trajectory=traj,
+                        reward=reward,
+                        domain=domain,
+                        step=step,
+                        sample_idx=sample_idx,
+                    )
 
             # Track metrics
             step_metrics["loss"].append(loss.item() * self.config.gradient_accumulation_steps)

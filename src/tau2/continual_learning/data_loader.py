@@ -5,7 +5,7 @@ import random
 from pathlib import Path
 from typing import Iterator, Optional
 
-from tau2.data_model.tasks import Task
+from AGentCL.data_model.tasks import Task
 
 from .config import GRPOConfig
 

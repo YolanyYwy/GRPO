@@ -1,7 +1,7 @@
 """Policy model wrapper for GRPO training with open-source LLMs."""
 
 import copy
-from typing import Optional
+from typing import Optional, Tuple
 
 import torch
 import torch.nn.functional as F
@@ -9,15 +9,177 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from AGentCL.agent.base import LocalAgent
 from AGentCL.agent.llm_agent import LLMAgent, LLMAgentState
-from AGentCL.data_model.message import AssistantMessage, Message, SystemMessage
+from AGentCL.data_model.message import AssistantMessage, Message, SystemMessage, UserMessage
 from AGentCL.data_model.tasks import Task
 from AGentCL.environment.environment import Environment
 from AGentCL.orchestrator.orchestrator import Orchestrator
 from AGentCL.registry import registry
 from AGentCL.user.user_simulator import UserSimulator
+from AGentCL.user.base import ValidUserInputMessage, UserState
 
 from .config import GRPOConfig
 from .reward_oracle import Trajectory
+
+
+class LocalUserSimulator(UserSimulator):
+    """User simulator that uses a local model instead of API.
+
+    This class wraps a local PyTorch model for user simulation,
+    avoiding API calls and associated costs. The model parameters
+    are frozen and not updated during training.
+    """
+
+    def __init__(
+        self,
+        tools,
+        instructions,
+        model,
+        tokenizer,
+        temperature: float = 0.0,
+        max_new_tokens: int = 2048,
+    ):
+        """Initialize local user simulator.
+
+        Args:
+            tools: List of available tools for the user
+            instructions: User instructions/scenario
+            model: PyTorch model for generation (frozen)
+            tokenizer: Tokenizer for the model
+            temperature: Sampling temperature (default 0.0 for deterministic)
+            max_new_tokens: Maximum tokens to generate
+        """
+        # Initialize base class without llm parameter
+        super().__init__(
+            tools=tools,
+            instructions=instructions,
+            llm=None,  # We don't use API
+            llm_args={},
+        )
+        self.model = model
+        self.tokenizer = tokenizer
+        self.temperature = temperature
+        self.max_new_tokens = max_new_tokens
+
+    def _generate_next_message(
+        self, message: ValidUserInputMessage, state: UserState
+    ) -> Tuple[UserMessage, UserState]:
+        """Generate next user message using local model.
+
+        Args:
+            message: The assistant or tool message
+            state: The user simulator's state
+
+        Returns:
+            A tuple containing the user message and the updated user state
+        """
+        # Update state with new message
+        from AGentCL.data_model.message import MultiToolMessage
+
+        if isinstance(message, MultiToolMessage):
+            state.messages.extend(message.tool_messages)
+        else:
+            state.messages.append(message)
+
+        # Prepare messages for generation
+        messages = state.system_messages + state.flip_roles()
+
+        # Convert to text format for model
+        prompt = self._messages_to_prompt(messages)
+
+        # Get the actual model (unwrap DDP if needed)
+        model = self.model.module if hasattr(self.model, 'module') else self.model
+
+        # Generate with local model (no gradients needed)
+        with torch.no_grad():
+            inputs = self.tokenizer(prompt, return_tensors="pt").to(model.device)
+
+            # Generate with minimal parameters to avoid warnings
+            if self.temperature > 0:
+                outputs = model.generate(
+                    **inputs,
+                    max_new_tokens=self.max_new_tokens,
+                    do_sample=True,
+                    temperature=self.temperature,
+                    pad_token_id=self.tokenizer.pad_token_id or self.tokenizer.eos_token_id,
+                    eos_token_id=self.tokenizer.eos_token_id,
+                )
+            else:
+                outputs = model.generate(
+                    **inputs,
+                    max_new_tokens=self.max_new_tokens,
+                    do_sample=False,
+                    pad_token_id=self.tokenizer.pad_token_id or self.tokenizer.eos_token_id,
+                    eos_token_id=self.tokenizer.eos_token_id,
+                )
+
+            # Decode only the new tokens
+            generated_text = self.tokenizer.decode(
+                outputs[0][inputs.input_ids.shape[1]:],
+                skip_special_tokens=True
+            )
+
+        # Create user message
+        user_message = UserMessage(
+            role="user",
+            content=generated_text.strip(),
+            cost=0.0,  # No API cost
+            usage=None,
+            raw_data=None,
+        )
+
+        # TODO: Parse tool calls from generated text if needed
+        # For now, we assume text-only responses
+
+        # Update state with response
+        state.messages.append(user_message)
+        return user_message, state
+
+    def _messages_to_prompt(self, messages: list[Message]) -> str:
+        """Convert messages to prompt format.
+
+        Args:
+            messages: List of messages
+
+        Returns:
+            Formatted prompt string
+        """
+        # Use the tokenizer's chat template if available
+        if hasattr(self.tokenizer, "apply_chat_template"):
+            # Convert messages to dict format
+            chat_messages = []
+            for msg in messages:
+                if isinstance(msg, SystemMessage):
+                    chat_messages.append({"role": "system", "content": msg.content})
+                elif isinstance(msg, AssistantMessage):
+                    # In flipped roles, assistant becomes user
+                    chat_messages.append({"role": "user", "content": msg.content or ""})
+                elif isinstance(msg, UserMessage):
+                    # In flipped roles, user becomes assistant
+                    chat_messages.append({"role": "assistant", "content": msg.content or ""})
+                else:
+                    # Tool messages
+                    chat_messages.append({"role": "user", "content": msg.content or ""})
+
+            return self.tokenizer.apply_chat_template(
+                chat_messages,
+                tokenize=False,
+                add_generation_prompt=True
+            )
+        else:
+            # Fallback: simple concatenation
+            prompt_parts = []
+            for msg in messages:
+                if isinstance(msg, SystemMessage):
+                    prompt_parts.append(f"System: {msg.content}")
+                elif isinstance(msg, AssistantMessage):
+                    prompt_parts.append(f"User: {msg.content or ''}")
+                elif isinstance(msg, UserMessage):
+                    prompt_parts.append(f"Assistant: {msg.content or ''}")
+                else:
+                    prompt_parts.append(f"User: {msg.content or ''}")
+
+            prompt_parts.append("Assistant:")
+            return "\n\n".join(prompt_parts)
 
 
 class PolicyLLMAgent(LLMAgent):
@@ -79,18 +241,31 @@ class PolicyLLMAgent(LLMAgent):
         # Convert to text format for model
         prompt = self._messages_to_prompt(messages)
 
+        # Get the actual model (unwrap DDP if needed)
+        model = self.model.module if hasattr(self.model, 'module') else self.model
+
         # Generate with local model
         with torch.no_grad():
-            inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
+            inputs = self.tokenizer(prompt, return_tensors="pt").to(model.device)
 
-            # Generate
-            outputs = self.model.generate(
-                **inputs,
-                max_new_tokens=self.max_new_tokens,
-                temperature=self.temperature,
-                do_sample=True,
-                pad_token_id=self.tokenizer.pad_token_id or self.tokenizer.eos_token_id,
-            )
+            # Generate with minimal parameters to avoid warnings
+            if self.temperature > 0:
+                outputs = model.generate(
+                    **inputs,
+                    max_new_tokens=self.max_new_tokens,
+                    do_sample=True,
+                    temperature=self.temperature,
+                    pad_token_id=self.tokenizer.pad_token_id or self.tokenizer.eos_token_id,
+                    eos_token_id=self.tokenizer.eos_token_id,
+                )
+            else:
+                outputs = model.generate(
+                    **inputs,
+                    max_new_tokens=self.max_new_tokens,
+                    do_sample=False,
+                    pad_token_id=self.tokenizer.pad_token_id or self.tokenizer.eos_token_id,
+                    eos_token_id=self.tokenizer.eos_token_id,
+                )
 
             # Decode only the new tokens
             generated_text = self.tokenizer.decode(
@@ -182,6 +357,12 @@ class PolicyModel:
             trust_remote_code=True,
         )
 
+        # Ensure agent model parameters are trainable
+        self.model.train()
+        trainable_params = sum(p.numel() for p in self.model.parameters() if p.requires_grad)
+        total_params = sum(p.numel() for p in self.model.parameters())
+        print(f"Agent model: {trainable_params:,} / {total_params:,} parameters are trainable")
+
         # Load tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(
             config.model_name_or_path,
@@ -225,6 +406,39 @@ class PolicyModel:
         else:
             self.scheduler = None
 
+        # Load user simulator model if using local model
+        if config.use_local_user_model:
+            print(f"Loading user simulator model: {config.user_model}")
+            self.user_model = AutoModelForCausalLM.from_pretrained(
+                config.user_model,
+                torch_dtype=getattr(torch, config.model_dtype),
+                device_map={"": device},
+                trust_remote_code=True,
+            )
+            self.user_model.eval()  # Always in eval mode
+
+            # Freeze all user model parameters
+            for param in self.user_model.parameters():
+                param.requires_grad = False
+
+            # Verify user model is frozen
+            trainable_user_params = sum(p.numel() for p in self.user_model.parameters() if p.requires_grad)
+            total_user_params = sum(p.numel() for p in self.user_model.parameters())
+            print(f"User model: {trainable_user_params:,} / {total_user_params:,} parameters are trainable (should be 0)")
+            assert trainable_user_params == 0, "User model parameters must be frozen!"
+
+            self.user_tokenizer = AutoTokenizer.from_pretrained(
+                config.user_model,
+                trust_remote_code=True,
+            )
+            if self.user_tokenizer.pad_token is None:
+                self.user_tokenizer.pad_token = self.user_tokenizer.eos_token
+            print(f"User simulator model loaded on {device}")
+        else:
+            self.user_model = None
+            self.user_tokenizer = None
+            print(f"Using API for user simulator: {config.user_model}")
+
         print(f"Model loaded on {device}")
 
     def generate_responses(
@@ -262,9 +476,11 @@ class PolicyModel:
 
             # Create orchestrator
             orchestrator = Orchestrator(
+                domain=domain,
                 agent=agent,
                 user=user,
                 environment=environment,
+                task=task,
                 max_steps=50,  # Limit steps to prevent infinite loops
             )
 
@@ -322,7 +538,7 @@ class PolicyModel:
 
         return agent
 
-    def _create_user(self, task: Task, domain: str) -> UserSimulator:
+    def _create_user(self, task: Task, domain: str):
         """Create user simulator for the task.
 
         Args:
@@ -330,14 +546,14 @@ class PolicyModel:
             domain: Domain name
 
         Returns:
-            UserSimulator instance
+            UserSimulator or LocalUserSimulator instance
         """
         # Get user tools if available
         user_tools = []
         if domain == "telecom":
             # Telecom has user tools
             from AGentCL.domains.telecom.user_tools import TelecomUserTools
-            from AGentCL.domains.telecom.data_model import TelecomUserDB
+            from AGentCL.domains.telecom.user_data_model import TelecomUserDB
 
             # Create user DB (will be initialized by environment)
             user_db = TelecomUserDB()
@@ -348,12 +564,24 @@ class PolicyModel:
             else:
                 user_tools = list(user_tools_obj)
 
-        # Create user simulator
-        user = UserSimulator(
-            user_scenario=task.user_scenario,
-            tools=user_tools,
-            llm="gpt-4o-mini",  # Use cheap model for user simulation
-        )
+        # Create user simulator based on configuration
+        if self.config.use_local_user_model:
+            # Use local model
+            user = LocalUserSimulator(
+                instructions=task.user_scenario,
+                tools=user_tools,
+                model=self.user_model,
+                tokenizer=self.user_tokenizer,
+                temperature=self.config.user_model_temperature,
+                max_new_tokens=self.config.max_new_tokens,
+            )
+        else:
+            # Use API
+            user = UserSimulator(
+                instructions=task.user_scenario,
+                tools=user_tools,
+                llm=self.config.user_model,
+            )
 
         return user
 
@@ -375,6 +603,10 @@ class PolicyModel:
             Tensor of log probabilities (one per assistant message)
         """
         model = self.reference_model if use_reference else self.model
+
+        # Unwrap DDP if needed
+        if hasattr(model, 'module'):
+            model = model.module
 
         # Extract assistant messages
         assistant_messages = [
@@ -406,6 +638,10 @@ class PolicyModel:
             full_ids = self.tokenizer.encode(full_text, return_tensors="pt").to(self.device)
 
             # Get target token IDs (tokens to compute log probs for)
+            if prompt_ids.shape[1] >= full_ids.shape[1]:
+                # Prompt is same length or longer than full text, skip
+                continue
+
             target_ids = full_ids[:, prompt_ids.shape[1]:]
 
             if target_ids.shape[1] == 0:
@@ -418,7 +654,15 @@ class PolicyModel:
                 logits = outputs.logits
 
             # Get logits for target positions
-            target_logits = logits[:, prompt_ids.shape[1]-1:-1, :]  # Shift by 1 for next-token prediction
+            # Shift by 1 for next-token prediction
+            start_idx = prompt_ids.shape[1] - 1
+            end_idx = full_ids.shape[1] - 1
+
+            if start_idx < 0 or end_idx <= start_idx:
+                # Invalid indices, skip
+                continue
+
+            target_logits = logits[:, start_idx:end_idx, :]
 
             # Compute log probabilities
             log_probs_tokens = F.log_softmax(target_logits, dim=-1)
@@ -552,8 +796,11 @@ class PolicyModel:
         import os
         os.makedirs(path, exist_ok=True)
 
+        # Unwrap DDP if needed before saving
+        model_to_save = self.model.module if hasattr(self.model, 'module') else self.model
+
         # Save model and tokenizer
-        self.model.save_pretrained(path)
+        model_to_save.save_pretrained(path)
         self.tokenizer.save_pretrained(path)
 
         # Save optimizer state

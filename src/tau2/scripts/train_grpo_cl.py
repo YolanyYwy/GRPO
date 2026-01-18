@@ -51,8 +51,8 @@ def parse_args():
     parser.add_argument(
         "--model_name_or_path",
         type=str,
-        default="Qwen/Qwen2.5-7B-Instruct",
-        help="Path or name of the model (HuggingFace model ID or local path)",
+        default="/data/yuweiyao/Qwen3-4B",
+        help="Path or name of the model (local path or HuggingFace model ID)",
     )
     parser.add_argument(
         "--model_dtype",
@@ -72,6 +72,30 @@ def parse_args():
         type=int,
         default=2048,
         help="Maximum number of tokens to generate per response",
+    )
+    parser.add_argument(
+        "--user_model",
+        type=str,
+        default="/data/yuweiyao/Qwen3-4B",
+        help="Model for user simulator (local path or API model name like gpt-3.5-turbo, gpt-4o-mini, gpt-4)",
+    )
+    parser.add_argument(
+        "--use_local_user_model",
+        action="store_true",
+        default=True,
+        help="Use local model for user simulator instead of API",
+    )
+    parser.add_argument(
+        "--no_local_user_model",
+        action="store_false",
+        dest="use_local_user_model",
+        help="Use API for user simulator instead of local model",
+    )
+    parser.add_argument(
+        "--user_model_temperature",
+        type=float,
+        default=0.0,
+        help="Temperature for user simulator model (fixed, not trainable)",
     )
 
     # GRPO hyperparameters
@@ -200,6 +224,48 @@ def parse_args():
         default=None,
         help="Weights & Biases project name (None = no wandb logging)",
     )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        default=False,
+        help="Enable verbose logging (trajectory details, etc.)",
+    )
+    parser.add_argument(
+        "--log_interval",
+        type=int,
+        default=10,
+        help="Print training metrics every N steps",
+    )
+    parser.add_argument(
+        "--use_progress_bar",
+        action="store_true",
+        default=True,
+        help="Use progress bar for training steps",
+    )
+    parser.add_argument(
+        "--no_progress_bar",
+        action="store_false",
+        dest="use_progress_bar",
+        help="Disable progress bar",
+    )
+    parser.add_argument(
+        "--save_trajectory_logs",
+        action="store_true",
+        default=True,
+        help="Save detailed trajectory logs to files",
+    )
+    parser.add_argument(
+        "--no_trajectory_logs",
+        action="store_false",
+        dest="save_trajectory_logs",
+        help="Disable trajectory logging",
+    )
+    parser.add_argument(
+        "--trajectory_log_interval",
+        type=int,
+        default=1,
+        help="Save trajectory logs every N steps (1 = every step)",
+    )
 
     # Optimization flags
     parser.add_argument(
@@ -241,8 +307,21 @@ def parse_args():
 
 def main():
     """Main training function."""
-    # Parse arguments
+    # Parse arguments first to get verbose setting
     args = parse_args()
+
+    # Suppress verbose logging from AGentCL components (unless verbose mode)
+    if not getattr(args, 'verbose', False):
+        import logging
+        from loguru import logger
+
+        # Disable loguru (used by AGentCL)
+        logger.disable("AGentCL")
+
+        # Set standard logging to WARNING level
+        logging.basicConfig(level=logging.WARNING)
+        for logger_name in ['AGentCL', 'tau2', 'litellm']:
+            logging.getLogger(logger_name).setLevel(logging.WARNING)
 
     # Create configuration
     config = GRPOConfig(
@@ -251,6 +330,9 @@ def main():
         model_dtype=args.model_dtype,
         temperature=args.temperature,
         max_new_tokens=args.max_new_tokens,
+        user_model=args.user_model,
+        use_local_user_model=args.use_local_user_model,
+        user_model_temperature=args.user_model_temperature,
         # GRPO
         num_samples_per_prompt=args.num_samples_per_prompt,
         kl_coef=args.kl_coef,
@@ -275,6 +357,11 @@ def main():
         save_interval=args.save_interval,
         eval_interval=args.eval_interval,
         wandb_project=args.wandb_project,
+        verbose=args.verbose,
+        log_interval=args.log_interval,
+        use_progress_bar=args.use_progress_bar,
+        save_trajectory_logs=args.save_trajectory_logs,
+        trajectory_log_interval=args.trajectory_log_interval,
         # Optimization
         use_flash_attention=args.use_flash_attention,
         gradient_checkpointing=args.gradient_checkpointing,

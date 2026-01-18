@@ -19,8 +19,8 @@ class GRPOConfig:
     """
 
     # Model configuration (Open-source with gradient access)
-    model_name_or_path: str = "Qwen/Qwen2.5-7B-Instruct"
-    """Path or name of the model (e.g., Qwen/Qwen2.5-7B-Instruct, meta-llama/Llama-3-8B-Instruct)"""
+    model_name_or_path: str = "/data/yuweiyao/Qwen3-4B"
+    """Path or name of the model (local path or HuggingFace model ID like Qwen/Qwen2.5-7B-Instruct)"""
 
     model_dtype: str = "bfloat16"
     """Model dtype for training (bfloat16, float16, float32)"""
@@ -30,6 +30,15 @@ class GRPOConfig:
 
     max_new_tokens: int = 2048
     """Maximum number of tokens to generate per response"""
+
+    user_model: str = "/data/yuweiyao/Qwen3-4B"
+    """Model for user simulator (local path or API model name like gpt-3.5-turbo, gpt-4o-mini, gpt-4)"""
+
+    use_local_user_model: bool = True
+    """Whether to use a local model for user simulator (True) or API (False)"""
+
+    user_model_temperature: float = 0.0
+    """Temperature for user simulator model (fixed, not trainable)"""
 
     # GRPO hyperparameters
     num_samples_per_prompt: int = 4
@@ -115,6 +124,12 @@ class GRPOConfig:
 
     use_progress_bar: bool = True
     """Use progress bar for training steps"""
+
+    save_trajectory_logs: bool = True
+    """Save detailed trajectory logs to files"""
+
+    trajectory_log_interval: int = 1
+    """Save trajectory logs every N steps (1 = every step)"""
 
     # Optimization flags
     use_flash_attention: bool = True
