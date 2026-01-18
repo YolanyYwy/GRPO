@@ -621,60 +621,77 @@ class PolicyModel:
         log_probs = []
 
         for msg_idx, msg in enumerate(assistant_messages):
-            # Reconstruct conversation history up to this message
-            history = []
-            for m in trajectory.messages:
-                if m == msg:
-                    break
-                history.append(m)
+            try:
+                # Reconstruct conversation history up to this message
+                history = []
+                for m in trajectory.messages:
+                    if m == msg:
+                        break
+                    history.append(m)
 
-            # Convert to prompt
-            prompt = self._messages_to_prompt(history)
-            target_text = msg.content
+                # Convert to prompt
+                prompt = self._messages_to_prompt(history)
+                target_text = msg.content
 
-            # Tokenize
-            prompt_ids = self.tokenizer.encode(prompt, return_tensors="pt").to(self.device)
-            full_text = prompt + target_text
-            full_ids = self.tokenizer.encode(full_text, return_tensors="pt").to(self.device)
+                if not target_text:
+                    continue
 
-            # Get target token IDs (tokens to compute log probs for)
-            if prompt_ids.shape[1] >= full_ids.shape[1]:
-                # Prompt is same length or longer than full text, skip
+                # Tokenize
+                prompt_ids = self.tokenizer.encode(prompt, return_tensors="pt").to(self.device)
+                full_text = prompt + target_text
+                full_ids = self.tokenizer.encode(full_text, return_tensors="pt").to(self.device)
+
+                # Get target token IDs (tokens to compute log probs for)
+                if prompt_ids.shape[1] >= full_ids.shape[1]:
+                    # Prompt is same length or longer than full text, skip
+                    continue
+
+                target_ids = full_ids[:, prompt_ids.shape[1]:]
+
+                if target_ids.shape[1] == 0:
+                    # No tokens generated, skip
+                    continue
+
+                # Forward pass
+                with torch.set_grad_enabled(not use_reference):
+                    outputs = model(full_ids)
+                    logits = outputs.logits
+
+                # Get logits for target positions
+                # Shift by 1 for next-token prediction
+                start_idx = prompt_ids.shape[1] - 1
+                end_idx = full_ids.shape[1] - 1
+
+                if start_idx < 0 or end_idx <= start_idx:
+                    # Invalid indices, skip
+                    continue
+
+                target_logits = logits[:, start_idx:end_idx, :]
+
+                # Check if shapes are compatible
+                if target_logits.shape[1] != target_ids.shape[1]:
+                    # Shape mismatch, skip this message
+                    continue
+
+                # Compute log probabilities
+                log_probs_tokens = F.log_softmax(target_logits, dim=-1)
+
+                # Gather log probs for actual tokens
+                token_log_probs = log_probs_tokens.gather(
+                    2, target_ids.unsqueeze(-1)
+                ).squeeze(-1)
+
+                # Sum log probs for this message
+                message_log_prob = token_log_probs.sum()
+                log_probs.append(message_log_prob)
+
+            except Exception as e:
+                # Skip this message if any error occurs
+                import traceback
+                if self.config.verbose:
+                    print(f"Warning: Failed to compute log probs for message {msg_idx}: {e}")
+                    traceback.print_exc()
                 continue
-
-            target_ids = full_ids[:, prompt_ids.shape[1]:]
-
-            if target_ids.shape[1] == 0:
-                # No tokens generated, skip
-                continue
-
-            # Forward pass
-            with torch.set_grad_enabled(not use_reference):
-                outputs = model(full_ids)
-                logits = outputs.logits
-
-            # Get logits for target positions
-            # Shift by 1 for next-token prediction
-            start_idx = prompt_ids.shape[1] - 1
-            end_idx = full_ids.shape[1] - 1
-
-            if start_idx < 0 or end_idx <= start_idx:
-                # Invalid indices, skip
-                continue
-
-            target_logits = logits[:, start_idx:end_idx, :]
-
-            # Compute log probabilities
-            log_probs_tokens = F.log_softmax(target_logits, dim=-1)
-
-            # Gather log probs for actual tokens
-            token_log_probs = log_probs_tokens.gather(
-                2, target_ids.unsqueeze(-1)
-            ).squeeze(-1)
-
-            # Sum log probs for this message
-            message_log_prob = token_log_probs.sum()
-            log_probs.append(message_log_prob)
 
         if not log_probs:
             return torch.tensor([0.0], device=self.device)
@@ -736,7 +753,8 @@ class PolicyModel:
         Returns:
             Total loss (scalar tensor)
         """
-        total_loss = torch.tensor(0.0, device=self.device)
+        total_loss = torch.tensor(0.0, device=self.device, requires_grad=True)
+        valid_count = 0
 
         for traj, advantage in zip(trajectories, advantages):
             # Get log probs under current policy
@@ -745,6 +763,16 @@ class PolicyModel:
             # Get log probs under reference policy (for KL)
             with torch.no_grad():
                 ref_log_probs = self.compute_log_probs(traj, use_reference=True)
+
+            # Check if we have valid log probs
+            if log_probs.numel() == 0 or ref_log_probs.numel() == 0:
+                # Skip this trajectory if no valid log probs
+                continue
+
+            # Ensure shapes match
+            if log_probs.shape != ref_log_probs.shape:
+                # Skip if shapes don't match
+                continue
 
             # Policy loss (advantage-weighted)
             # Negative because we want to maximize advantage * log_prob
@@ -758,9 +786,14 @@ class PolicyModel:
             # Total loss for this trajectory
             traj_loss = policy_loss + kl_penalty
             total_loss = total_loss + traj_loss
+            valid_count += 1
 
-        # Average over trajectories
-        total_loss = total_loss / len(trajectories)
+        # Average over valid trajectories
+        if valid_count > 0:
+            total_loss = total_loss / valid_count
+        else:
+            # No valid trajectories, return zero loss
+            total_loss = torch.tensor(0.0, device=self.device, requires_grad=True)
 
         return total_loss
 

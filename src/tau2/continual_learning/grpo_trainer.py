@@ -362,25 +362,9 @@ class GRPOTrainer:
                 device=self.device,
             )
 
-            # 4. Compute GRPO loss
-            try:
-                loss = self.policy.compute_grpo_loss(trajectories, advantages)
-
-                # Scale loss for gradient accumulation
-                loss = loss / self.config.gradient_accumulation_steps
-
-                # 5. Backward pass (accumulate gradients)
-                loss.backward()
-
-                accumulated_loss += loss.item()
-
-            except Exception as e:
-                if self.is_main_process():
-                    print(f"Warning: Failed to compute loss for task {task.id}: {e}")
-                continue
-
-            # 6. Store trajectories in buffer
+            # 3.5. Log trajectories BEFORE computing loss (so we don't miss failed cases)
             for sample_idx, (traj, reward) in enumerate(zip(trajectories, rewards)):
+                # Store in buffer
                 self.trajectory_buffer.add(
                     domain=domain,
                     task=task,
@@ -401,12 +385,31 @@ class GRPOTrainer:
                         sample_idx=sample_idx,
                     )
 
-            # Track metrics
-            step_metrics["loss"].append(loss.item() * self.config.gradient_accumulation_steps)
-            step_metrics["reward_mean"].append(mean_reward)
-            step_metrics["reward_max"].append(np.max(rewards))
-            step_metrics["reward_min"].append(np.min(rewards))
-            step_metrics["reward_std"].append(np.std(rewards))
+            # 4. Compute GRPO loss
+            try:
+                loss = self.policy.compute_grpo_loss(trajectories, advantages)
+
+                # Scale loss for gradient accumulation
+                loss = loss / self.config.gradient_accumulation_steps
+
+                # 5. Backward pass (accumulate gradients)
+                loss.backward()
+
+                accumulated_loss += loss.item()
+
+                # Track metrics (only if loss computation succeeded)
+                step_metrics["loss"].append(loss.item() * self.config.gradient_accumulation_steps)
+                step_metrics["reward_mean"].append(mean_reward)
+                step_metrics["reward_max"].append(np.max(rewards))
+                step_metrics["reward_min"].append(np.min(rewards))
+                step_metrics["reward_std"].append(np.std(rewards))
+
+            except Exception as e:
+                if self.is_main_process():
+                    print(f"Warning: Failed to compute loss for task {task.id}: {e}")
+                # Continue to next task even if loss computation failed
+                # Trajectories are already logged above
+                continue
 
             # 7. Update policy after accumulation steps
             if (accum_idx + 1) % self.config.gradient_accumulation_steps == 0:
