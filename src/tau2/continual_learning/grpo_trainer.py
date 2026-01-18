@@ -273,11 +273,27 @@ class GRPOTrainer:
 
         # Training loop
         for step in range(self.config.num_steps_per_task):
+            if self.is_main_process():
+                print(f"\n{'='*80}")
+                print(f"STEP {step}/{self.config.num_steps_per_task} - Domain: {domain}")
+                print(f"{'='*80}")
+
             # Sample batch
             batch = self._sample_batch(train_tasks, domain)
 
+            if self.is_main_process():
+                print(f"Sampled batch of {len(batch)} tasks")
+
             # Train step
             metrics = self.train_step(batch, domain, step)
+
+            if self.is_main_process():
+                print(f"\n{'='*80}")
+                print(f"STEP {step} COMPLETED")
+                if metrics:
+                    print(f"Metrics: loss={metrics.get('loss', [0])[0]:.4f}, "
+                          f"reward={metrics.get('reward_mean', [0])[0]:.3f}")
+                print(f"{'='*80}\n")
 
             # Log metrics (main process only)
             if self.is_main_process() and metrics:
@@ -324,8 +340,14 @@ class GRPOTrainer:
 
         # Process each task in batch with gradient accumulation
         for accum_idx, task in enumerate(batch):
+            if self.is_main_process():
+                print(f"\n[Step {step}] Processing task {accum_idx+1}/{len(batch)}: {task.id}")
+
             # 1. Generate multiple response trajectories
             environment = self._create_environment(domain)
+
+            if self.is_main_process():
+                print(f"  → Generating {self.config.num_samples_per_prompt} trajectories...")
 
             try:
                 trajectories = self.policy.generate_responses(
@@ -334,15 +356,22 @@ class GRPOTrainer:
                     num_samples=self.config.num_samples_per_prompt,
                     domain=domain,
                 )
+                if self.is_main_process():
+                    print(f"  ✓ Generated {len(trajectories)} trajectories")
             except Exception as e:
                 if self.is_main_process():
-                    print(f"Warning: Failed to generate trajectories for task {task.id}: {e}")
+                    print(f"  ✗ Failed to generate trajectories: {e}")
                 continue
 
             if not trajectories:
+                if self.is_main_process():
+                    print(f"  ✗ No trajectories generated, skipping")
                 continue
 
             # 2. Compute rewards using oracle
+            if self.is_main_process():
+                print(f"  → Computing rewards...")
+
             rewards = []
             reward_infos = self.oracle.compute_batch_rewards_with_info(
                 task=task,
@@ -354,6 +383,10 @@ class GRPOTrainer:
             for reward_info in reward_infos:
                 rewards.append(reward_info.reward)
 
+            if self.is_main_process():
+                mean_r = sum(rewards) / len(rewards) if rewards else 0
+                print(f"  ✓ Rewards: mean={mean_r:.3f}, min={min(rewards):.3f}, max={max(rewards):.3f}")
+
             # 3. Compute advantages (relative to mean within this prompt)
             mean_reward = np.mean(rewards)
             advantages = torch.tensor(
@@ -363,6 +396,9 @@ class GRPOTrainer:
             )
 
             # 3.5. Log trajectories BEFORE computing loss (so we don't miss failed cases)
+            if self.is_main_process():
+                print(f"  → Storing {len(trajectories)} trajectories...")
+
             for sample_idx, (traj, reward) in enumerate(zip(trajectories, rewards)):
                 # Store in buffer
                 self.trajectory_buffer.add(
@@ -385,7 +421,13 @@ class GRPOTrainer:
                         sample_idx=sample_idx,
                     )
 
+            if self.is_main_process():
+                print(f"  ✓ Trajectories stored")
+
             # 4. Compute GRPO loss
+            if self.is_main_process():
+                print(f"  → Computing GRPO loss...")
+
             try:
                 loss = self.policy.compute_grpo_loss(trajectories, advantages)
 
@@ -397,6 +439,9 @@ class GRPOTrainer:
 
                 accumulated_loss += loss.item()
 
+                if self.is_main_process():
+                    print(f"  ✓ Loss: {loss.item() * self.config.gradient_accumulation_steps:.4f}")
+
                 # Track metrics (only if loss computation succeeded)
                 step_metrics["loss"].append(loss.item() * self.config.gradient_accumulation_steps)
                 step_metrics["reward_mean"].append(mean_reward)
@@ -406,17 +451,21 @@ class GRPOTrainer:
 
             except Exception as e:
                 if self.is_main_process():
-                    print(f"Warning: Failed to compute loss for task {task.id}: {e}")
+                    print(f"  ✗ Failed to compute loss: {e}")
                 # Continue to next task even if loss computation failed
                 # Trajectories are already logged above
                 continue
 
             # 7. Update policy after accumulation steps
             if (accum_idx + 1) % self.config.gradient_accumulation_steps == 0:
+                if self.is_main_process():
+                    print(f"  → Updating policy (accumulated {self.config.gradient_accumulation_steps} gradients)...")
                 # Gradients are automatically averaged across GPUs by DDP
                 self.policy.update_policy(
                     torch.tensor(0.0, device=self.device)  # Dummy loss, gradients already computed
                 )
+                if self.is_main_process():
+                    print(f"  ✓ Policy updated")
 
         # Update policy with any remaining accumulated gradients
         if len(batch) % self.config.gradient_accumulation_steps != 0:

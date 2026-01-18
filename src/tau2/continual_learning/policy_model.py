@@ -468,6 +468,8 @@ class PolicyModel:
         self.model.eval()
 
         for sample_idx in range(num_samples):
+            print(f"    Sample {sample_idx+1}/{num_samples}...", end=" ", flush=True)
+
             # Create agent using this model
             agent = self._create_agent(environment, domain)
 
@@ -498,9 +500,10 @@ class PolicyModel:
                 )
 
                 trajectories.append(trajectory)
+                print(f"✓ ({len(simulation_run.messages)} msgs, {simulation_run.termination_reason})")
 
             except Exception as e:
-                print(f"Warning: Trajectory generation failed for sample {sample_idx}: {e}")
+                print(f"✗ Error: {str(e)[:50]}")
                 # Continue with other samples
                 continue
 
