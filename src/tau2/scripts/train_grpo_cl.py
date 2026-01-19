@@ -39,7 +39,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from tau2.continual_learning import GRPOConfig
 from tau2.continual_learning.grpo_trainer import GRPOTrainer
 
-
 def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(

@@ -1,0 +1,3899 @@
+[
+  {
+    "id": "119",
+    "description": {
+      "purpose": "User wants to change shipping address for pending order #W7273405.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to change the shipping address to 991 River Street, Charlotte, NC 28240. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the shipping address for your pending order #W7273405.",
+        "known_info": "You are Sophia Davis in zip code 28240.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "119_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Sophia",
+            "last_name": "Davis",
+            "zip": "28240"
+          },
+          "info": null
+        },
+        {
+          "action_id": "119_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W7273405"
+          },
+          "info": null
+        },
+        {
+          "action_id": "119_2",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W7273405",
+            "new_address": {
+              "address1": "991 River Street",
+              "address2": "Suite 396",
+              "city": "Charlotte",
+              "country": "USA",
+              "state": "NC",
+              "zip": "28240"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify shipping address for order #W7273405."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "293",
+    "description": {
+      "purpose": "User wants to return items from delivered order #W3733909.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to return the following items: Bicycle, Hiking Boots, Bluetooth Speaker. Confirm the return when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W3733909 but want to return some items.",
+        "known_info": "You are Amelia Ito.\nYour email is amelia.ito8974@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "293_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "amelia.ito8974@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "293_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W3733909"
+          },
+          "info": null
+        },
+        {
+          "action_id": "293_2",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W3733909",
+            "item_ids": [
+              "2143041831",
+              "6595128475",
+              "5650803029"
+            ],
+            "payment_method_id": "credit_card_1016162"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process return for order #W3733909."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "42",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are brief and your memory is not too good sometimes, but you are polite.",
+        "domain": "retail",
+        "reason_for_call": "You just created your user id mei_patel_7272 and ordered some things, but realized you might have typed your address wrong. You want to check it, and potentially correct all order addresses and your user address. After this, you'd like to check the jigsaw you ordered, and if it's not shipped yet, you want to change it to the easiest jigsaw (easiest level, least pieces) because your kid is too young. By default you use PayPal.",
+        "known_info": "Your name is Mei Patel, and you live in 445 Maple Drive, Suite 394, Fort Worth, Texas, 76165.",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "42_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Mei",
+            "last_name": "Patel",
+            "zip": "76165"
+          },
+          "info": null
+        },
+        {
+          "action_id": "42_1",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mei_patel_7272"
+          },
+          "info": null
+        },
+        {
+          "action_id": "42_2",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9583042"
+          },
+          "info": null
+        },
+        {
+          "action_id": "42_3",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4082615"
+          },
+          "info": null
+        },
+        {
+          "action_id": "42_4",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W9583042",
+            "address1": "445 Maple Drive",
+            "address2": "Suite 394",
+            "city": "Fort Worth",
+            "state": "TX",
+            "country": "USA",
+            "zip": "76165"
+          },
+          "info": null
+        },
+        {
+          "action_id": "42_5",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W4082615",
+            "address1": "445 Maple Drive",
+            "address2": "Suite 394",
+            "city": "Fort Worth",
+            "state": "TX",
+            "country": "USA",
+            "zip": "76165"
+          },
+          "info": null
+        },
+        {
+          "action_id": "42_6",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "mei_patel_7272",
+            "address1": "445 Maple Drive",
+            "address2": "Suite 394",
+            "city": "Fort Worth",
+            "state": "TX",
+            "country": "USA",
+            "zip": "76165"
+          },
+          "info": null
+        },
+        {
+          "action_id": "42_7",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "1808611083"
+          },
+          "info": null
+        },
+        {
+          "action_id": "42_8",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4082615"
+          },
+          "info": null
+        },
+        {
+          "action_id": "42_9",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W4082615",
+            "item_ids": [
+              "9779102705"
+            ],
+            "new_item_ids": [
+              "1096508426"
+            ],
+            "payment_method_id": "paypal_4768213"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "185",
+    "description": {
+      "purpose": "User wants to update their default address.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to update your default address to 127 Park Drive, San Francisco, CA 94125. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to update your default shipping address.",
+        "known_info": "You are Sofia Ito in zip code 94125.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "185_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Sofia",
+            "last_name": "Ito",
+            "zip": "94125"
+          },
+          "info": null
+        },
+        {
+          "action_id": "185_1",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "sofia_ito_7804",
+            "new_address": {
+              "address1": "127 Park Drive",
+              "address2": "Apt 828",
+              "city": "San Francisco",
+              "country": "USA",
+              "state": "CA",
+              "zip": "94125"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should update default address for user sofia_ito_7804."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "103",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are busy, happy, outgoing, messy, optimistic. You like to say one thing at a time.",
+        "domain": "retail",
+        "reason_for_call": "You want to return the bookshelf and jigsaw you received in the same order. Make sure you mention at the beginning that you want to cancel these two things, and they are from the same order. You also want to return the backpack you received with the vacuum cleaner. You also want to change your pending order address to the default Chicago one, and change its item color to red. You want to get the tracking number of your cancelled order.",
+        "known_info": "You name is Lucas Brown and your email is lucas.brown9344@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "104_0",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W6239298",
+            "item_ids": [
+              "4900661478",
+              "3614853563"
+            ],
+            "payment_method_id": "credit_card_2112420"
+          },
+          "info": null
+        },
+        {
+          "action_id": "104_1",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W9218746",
+            "item_ids": [
+              "7824298782"
+            ],
+            "payment_method_id": "credit_card_2112420"
+          },
+          "info": null
+        },
+        {
+          "action_id": "104_2",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W4860251",
+            "address1": "921 Park Avenue",
+            "address2": "Suite 892",
+            "city": "Chicago",
+            "country": "USA",
+            "state": "IL",
+            "zip": "60612"
+          },
+          "info": null
+        },
+        {
+          "action_id": "104_3",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W4860251",
+            "item_ids": [
+              "5209958006"
+            ],
+            "new_item_ids": [
+              "8964750292"
+            ],
+            "payment_method_id": "credit_card_2112420"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [
+        "286422338955"
+      ],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "204",
+    "description": {
+      "purpose": "User wants to check status of order #W2040365.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to know the status of your order and when it will arrive.",
+        "domain": "retail",
+        "reason_for_call": "You want to check the status of your order #W2040365.",
+        "known_info": "You are Fatima Muller in zip code 60644.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "204_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Fatima",
+            "last_name": "Muller",
+            "zip": "60644"
+          },
+          "info": null
+        },
+        {
+          "action_id": "204_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W2040365"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should provide status information for order #W2040365."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "173",
+    "description": {
+      "purpose": "User wants to update their default address.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to update your default address to 430 Main Street, San Francisco, CA 94121. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to update your default shipping address.",
+        "known_info": "You are Mei Kim in zip code 94121.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "173_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Mei",
+            "last_name": "Kim",
+            "zip": "94121"
+          },
+          "info": null
+        },
+        {
+          "action_id": "173_1",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "mei_kim_6875",
+            "new_address": {
+              "address1": "430 Main Street",
+              "address2": "Apt 299",
+              "city": "San Francisco",
+              "country": "USA",
+              "state": "CA",
+              "zip": "94121"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should update default address for user mei_kim_6875."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "284",
+    "description": {
+      "purpose": "User wants to change payment method for pending order #W5861600.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change the payment method to a different one. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the payment method for your pending order #W5861600.",
+        "known_info": "You are Daiki Khan in zip code 28279.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "284_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Daiki",
+            "last_name": "Khan",
+            "zip": "28279"
+          },
+          "info": null
+        },
+        {
+          "action_id": "284_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5861600"
+          },
+          "info": null
+        },
+        {
+          "action_id": "284_2",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "daiki_khan_6856"
+          },
+          "info": null
+        },
+        {
+          "action_id": "284_3",
+          "name": "modify_pending_order_payment",
+          "arguments": {
+            "order_id": "#W5861600",
+            "new_payment_method_id": "gift_card_2491643"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify payment method for order #W5861600."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "86",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are shy, rigid.",
+        "domain": "retail",
+        "reason_for_call": "You want to exchange your Fleece Jacket to red color and half zipper. You also want to want to change your default address to your Washington DC address (which you do not want to reveal but is in one of the orders).",
+        "known_info": "You name is Yusuf Hernandez and your email is yusuf.hernandez8836@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "86_0",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W2466703",
+            "item_ids": [
+              "9385662952"
+            ],
+            "new_item_ids": [
+              "8733974883"
+            ],
+            "payment_method_id": "paypal_7529813"
+          },
+          "info": null
+        },
+        {
+          "action_id": "86_1",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "yusuf_hernandez_6785",
+            "address1": "565 Maple Drive",
+            "address2": "Suite 501",
+            "city": "Washington",
+            "country": "USA",
+            "state": "DC",
+            "zip": "20307"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "99",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are outgoing, organized, cautious, pessimistic.  \nIf you cannot cancel just a single item in an order, you are okay with cancelling the whole order, but you will do it yourself on the website and don't need for the agent to help.",
+        "domain": "retail",
+        "reason_for_call": "You want to exchange your Bicycle to a larger frame size for your kid. The Jigsaw Puzzle in the same order also needs to be exchanged, you want the same difficulty, but 1000 more pieces, and you prefer art over the animal theme if both are available. Make sure you mention these at the same time. \nYou also want to exchange your camera to a slightly lower resolution, without changing the other options. For both orders, you'd prefer the visa card as payment or refund method. Lastly, you want to cancel the skateboard (and only the skateboard) in one of your orders.",
+        "known_info": "You name is Sofia Li and your zip code is 78260.",
+        "unknown_info": "You do not remember your email address."
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "100_0",
+          "name": "exchange_delivered_order_items",
+          "arguments": {
+            "order_id": "#W4689314",
+            "item_ids": [
+              "5996159312"
+            ],
+            "new_item_ids": [
+              "8363011723"
+            ],
+            "payment_method_id": "credit_card_3951670"
+          },
+          "info": null
+        },
+        {
+          "action_id": "100_1",
+          "name": "exchange_delivered_order_items",
+          "arguments": {
+            "order_id": "#W3916020",
+            "item_ids": [
+              "7758198585",
+              "4068787148"
+            ],
+            "new_item_ids": [
+              "5606522780",
+              "5546244844"
+            ],
+            "payment_method_id": "credit_card_3951670"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "7",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": ".",
+        "domain": "retail",
+        "reason_for_call": "You want to exchange the water bottle and the desk lamp. You want to exchange the water bottle to a bigger one, and the desk lamp to a less bright one (prefer AC adapter > battery > USB). If the agent asks for confirmation, only exchange the desk lamp.",
+        "known_info": "You are mei_kovacs_8020 living in zipcode 28236.",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "7_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Mei",
+            "last_name": "Kovacs",
+            "zip": "28236"
+          },
+          "info": null
+        },
+        {
+          "action_id": "7_1",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mei_kovacs_8020"
+          },
+          "info": null
+        },
+        {
+          "action_id": "7_2",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W6390527"
+          },
+          "info": null
+        },
+        {
+          "action_id": "7_3",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "8310926033"
+          },
+          "info": null
+        },
+        {
+          "action_id": "7_4",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "6817146515"
+          },
+          "info": null
+        },
+        {
+          "action_id": "7_5",
+          "name": "exchange_delivered_order_items",
+          "arguments": {
+            "order_id": "#W6390527",
+            "item_ids": [
+              "8384507844"
+            ],
+            "new_item_ids": [
+              "1569765161"
+            ],
+            "payment_method_id": "paypal_7644869"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "124",
+    "description": {
+      "purpose": "User wants to return items from delivered order #W4817420.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to return the following items: Hiking Boots. Confirm the return when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W4817420 but want to return some items.",
+        "known_info": "You are Ava Moore in zip code 78234.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "124_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Ava",
+            "last_name": "Moore",
+            "zip": "78234"
+          },
+          "info": null
+        },
+        {
+          "action_id": "124_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4817420"
+          },
+          "info": null
+        },
+        {
+          "action_id": "124_2",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W4817420",
+            "item_ids": [
+              "3812493782"
+            ],
+            "payment_method_id": "gift_card_8168843"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process return for order #W4817420."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "111",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are sad and cautious. You like to say things together.",
+        "domain": "retail",
+        "reason_for_call": "You want to modify the laptop order to your NYC address (you don't want to reveal it but should be in your orders profile). You also like to modify the laptop to be {'processor': 'i5', 'storage': '256GB SSD', 'color': 'space grey'};  You also want to exchange your watch to be black dial color but keep the leather strap.",
+        "known_info": "You name is Yara Silva and your zip code is 77159.",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "112_0",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W9810810",
+            "item_ids": [
+              "1355937109"
+            ],
+            "new_item_ids": [
+              "9949163720"
+            ],
+            "payment_method_id": "gift_card_7252880"
+          },
+          "info": null
+        },
+        {
+          "action_id": "112_1",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W3730488",
+            "address1": "555 Highland Drive",
+            "address2": "Suite 872",
+            "city": "New York",
+            "country": "USA",
+            "state": "NY",
+            "zip": "10116"
+          },
+          "info": null
+        },
+        {
+          "action_id": "112_2",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W3730488",
+            "item_ids": [
+              "2913673670"
+            ],
+            "new_item_ids": [
+              "2216662955"
+            ],
+            "payment_method_id": "gift_card_7252880"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify the items and address as requested."
+      ]
+    }
+  },
+  {
+    "id": "69",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are polite and friendly.",
+        "domain": "retail",
+        "reason_for_call": "You want to return an item you just received: a laptop. You think that you ordered it around April 2023 but are not sure. You want to return it because you found a better deal elsewhere. You want to return it for a full refund. If it cannot be returned, see if it can be canceled.",
+        "known_info": "You are emma_smith_8564 living in New York, New York, 10192.",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "69_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Emma",
+            "last_name": "Smith",
+            "zip": "10192"
+          },
+          "info": null
+        },
+        {
+          "action_id": "69_1",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "emma_smith_8564"
+          },
+          "info": null
+        },
+        {
+          "action_id": "69_2",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W2417020"
+          },
+          "info": null
+        },
+        {
+          "action_id": "69_3",
+          "name": "cancel_pending_order",
+          "arguments": {
+            "order_id": "#W2417020",
+            "reason": "no longer needed"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "56",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are polite but brief and firm.",
+        "domain": "retail",
+        "reason_for_call": "You wonder when is your air purifier is arriving. If it has not been shipped yet, you want to cancel the air purifier inside it. If you cannot cancel just the air purifier, you want to modify it to the cheapest possible air purifier, and refund to the gift card. You do not remember your gift card id but it should be in your user account. If you cannot modify it or refund to the gift card, no action.",
+        "known_info": "You are ivan_hernandez_6923 living in San Diego, 92133.",
+        "unknown_info": "You don't have an email."
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "56_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Ivan",
+            "last_name": "Hernandez",
+            "zip": "92133"
+          },
+          "info": null
+        },
+        {
+          "action_id": "56_1",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "ivan_hernandez_6923"
+          },
+          "info": null
+        },
+        {
+          "action_id": "56_2",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5838674"
+          },
+          "info": null
+        },
+        {
+          "action_id": "56_3",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4284542"
+          },
+          "info": null
+        },
+        {
+          "action_id": "56_4",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W2782744"
+          },
+          "info": null
+        },
+        {
+          "action_id": "56_5",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "3821016478"
+          },
+          "info": null
+        },
+        {
+          "action_id": "56_6",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W4284542",
+            "item_ids": [
+              "8302289002"
+            ],
+            "new_item_ids": [
+              "9534205511"
+            ],
+            "payment_method_id": "gift_card_9368765"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "249",
+    "description": {
+      "purpose": "User wants to change payment method for pending order #W6426438.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change the payment method to a different one. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the payment method for your pending order #W6426438.",
+        "known_info": "You are Ethan Lopez.\nYour email is ethan.lopez8943@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "249_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "ethan.lopez8943@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "249_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W6426438"
+          },
+          "info": null
+        },
+        {
+          "action_id": "249_2",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "ethan_lopez_6291"
+          },
+          "info": null
+        },
+        {
+          "action_id": "249_3",
+          "name": "modify_pending_order_payment",
+          "arguments": {
+            "order_id": "#W6426438",
+            "new_payment_method_id": "gift_card_7219486"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify payment method for order #W6426438."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "112",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are sad and cautious. You like to say things piecewise.",
+        "domain": "retail",
+        "reason_for_call": "You want to modify your laptop order to your NYC address (you don't want to reveal it yourself but the address should be in your orders profile). You also want to modify the laptop to item number 9844888101. You also want to change your watch for one with black dial color but keeping the leather strap.",
+        "known_info": "You name is Yara Silva and your zip code is 77159.",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "113_0",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W9810810",
+            "item_ids": [
+              "1355937109"
+            ],
+            "new_item_ids": [
+              "9949163720"
+            ],
+            "payment_method_id": "gift_card_7252880"
+          },
+          "info": null
+        },
+        {
+          "action_id": "113_1",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W3730488",
+            "address1": "555 Highland Drive",
+            "address2": "Suite 872",
+            "city": "New York",
+            "country": "USA",
+            "state": "NY",
+            "zip": "10116"
+          },
+          "info": null
+        },
+        {
+          "action_id": "113_2",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W3730488",
+            "item_ids": [
+              "2913673670"
+            ],
+            "new_item_ids": [
+              "9844888101"
+            ],
+            "payment_method_id": "gift_card_7252880"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "214",
+    "description": {
+      "purpose": "User wants to change payment method for pending order #W1654931.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change the payment method to a different one. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the payment method for your pending order #W1654931.",
+        "known_info": "You are Liam Thomas.\nYour email is liam.thomas9081@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "214_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "liam.thomas9081@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "214_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W1654931"
+          },
+          "info": null
+        },
+        {
+          "action_id": "214_2",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "liam_thomas_7882"
+          },
+          "info": null
+        },
+        {
+          "action_id": "214_3",
+          "name": "modify_pending_order_payment",
+          "arguments": {
+            "order_id": "#W1654931",
+            "new_payment_method_id": "paypal_3650980"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify payment method for order #W1654931."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "265",
+    "description": {
+      "purpose": "User wants to cancel pending order #W1436802.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your order because it is ordered by mistake. Confirm the cancellation when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to cancel your order #W1436802.",
+        "known_info": "You are Daiki Johnson.\nYour email is daiki.johnson2279@example.com.",
+        "unknown_info": "You do not remember your zip code."
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "265_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "daiki.johnson2279@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "265_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W1436802"
+          },
+          "info": null
+        },
+        {
+          "action_id": "265_2",
+          "name": "cancel_pending_order",
+          "arguments": {
+            "order_id": "#W1436802",
+            "reason": "ordered by mistake"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should cancel order #W1436802."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "152",
+    "description": {
+      "purpose": "User wants to update their default address.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to update your default address to 801 Main Drive, San Francisco, CA 94180. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to update your default shipping address.",
+        "known_info": "You are Fatima Li.\nYour email is fatima.li2845@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "152_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "fatima.li2845@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "152_1",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "fatima_li_8519",
+            "new_address": {
+              "address1": "801 Main Drive",
+              "address2": "Apt 230",
+              "city": "San Francisco",
+              "country": "USA",
+              "state": "CA",
+              "zip": "94180"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should update default address for user fatima_li_8519."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "180",
+    "description": {
+      "purpose": "User wants to change shipping address for pending order #W2694395.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to change the shipping address to 879 River Street, Los Angeles, CA 90980. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the shipping address for your pending order #W2694395.",
+        "known_info": "You are Mei Moore.\nYour email is mei.moore6624@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "180_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "mei.moore6624@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "180_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W2694395"
+          },
+          "info": null
+        },
+        {
+          "action_id": "180_2",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W2694395",
+            "new_address": {
+              "address1": "879 River Street",
+              "address2": "Suite 316",
+              "city": "Los Angeles",
+              "country": "USA",
+              "state": "CA",
+              "zip": "90980"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify shipping address for order #W2694395."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "3",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are a private person that does not want to reveal much about yourself.",
+        "domain": "retail",
+        "reason_for_call": "You want to know how many tshirt options are available in the online store right now. You want to modify all your pending small tshirt to purple, same size, same v-neck, and prefer polyester.",
+        "known_info": "You are Yusuf Rossi in zipcode 19122.",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "3_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Yusuf",
+            "last_name": "Rossi",
+            "zip": "19122"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_1",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "6086499569"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_3",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "9523456873"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_4",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "yusuf_rossi_9620"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_5",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W6247578"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_6",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9711842"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_7",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4776164"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_8",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W6679257"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_9",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W2378156"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_10",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "9523456873"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_11",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "yusuf_rossi_9620"
+          },
+          "info": null
+        },
+        {
+          "action_id": "3_12",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W4776164",
+            "item_ids": [
+              "8349118980"
+            ],
+            "new_item_ids": [
+              "9647292434"
+            ],
+            "payment_method_id": "credit_card_9513926"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [
+        "10"
+      ],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "244",
+    "description": {
+      "purpose": "User wants to return items from delivered order #W1578930.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to return the following items: Makeup Kit. Confirm the return when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W1578930 but want to return some items.",
+        "known_info": "You are Harper Silva.\nYour email is harper.silva1192@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "244_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "harper.silva1192@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "244_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W1578930"
+          },
+          "info": null
+        },
+        {
+          "action_id": "244_2",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W1578930",
+            "item_ids": [
+              "1763705424"
+            ],
+            "payment_method_id": "credit_card_7453883"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process return for order #W1578930."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "194",
+    "description": {
+      "purpose": "User wants to check status of order #W9894882.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to know the status of your order and when it will arrive.",
+        "domain": "retail",
+        "reason_for_call": "You want to check the status of your order #W9894882.",
+        "known_info": "You are Raj Davis.\nYour email is raj.davis3587@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "194_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "raj.davis3587@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "194_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9894882"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should provide status information for order #W9894882."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "10",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are a mysterious person and do not want to reveal much about yourself or speak too many words at the same time.",
+        "domain": "retail",
+        "reason_for_call": "For some reason, you want to return all things ordered. You have two payment methods and two orders, and you want to refund each order to the other order's payment method. If not possible, you are angry and swear for a few times, then ask for human representative.",
+        "known_info": "You are mia_garcia_4516 (mia.garcia2723@example.com).",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "10_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "mia.garcia2723@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "10_1",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mia_garcia_4516"
+          },
+          "info": null
+        },
+        {
+          "action_id": "10_2",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5490111"
+          },
+          "info": null
+        },
+        {
+          "action_id": "10_3",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W7387996"
+          },
+          "info": null
+        },
+        {
+          "action_id": "10_4",
+          "name": "transfer_to_human_agents",
+          "arguments": {
+            "summary": "The user wants to refund each order to the opposite order's payment method, but the agent cannot help."
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "199",
+    "description": {
+      "purpose": "User wants to update their default address.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to update your default address to 592 Park Road, Fort Worth, TX 76195. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to update your default shipping address.",
+        "known_info": "You are Raj Lopez.\nYour email is raj.lopez2997@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "199_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "raj.lopez2997@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "199_1",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "raj_lopez_5873",
+            "new_address": {
+              "address1": "592 Park Road",
+              "address2": "",
+              "city": "Fort Worth",
+              "country": "USA",
+              "state": "TX",
+              "zip": "76195"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should update default address for user raj_lopez_5873."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "215",
+    "description": {
+      "purpose": "User wants to change payment method for pending order #W2325029.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change the payment method to a different one. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the payment method for your pending order #W2325029.",
+        "known_info": "You are Ethan Nguyen.\nYour email is ethan.nguyen4375@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "215_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "ethan.nguyen4375@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "215_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W2325029"
+          },
+          "info": null
+        },
+        {
+          "action_id": "215_2",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "ethan_nguyen_7565"
+          },
+          "info": null
+        },
+        {
+          "action_id": "215_3",
+          "name": "modify_pending_order_payment",
+          "arguments": {
+            "order_id": "#W2325029",
+            "new_payment_method_id": "gift_card_2834741"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify payment method for order #W2325029."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "105",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are cautious, messy, rigid.",
+        "domain": "retail",
+        "reason_for_call": "For order #W4316152, you want to  exchange one Tea Kettle {'material': 'glass', 'capacity': '2 liters', 'stovetop compatibility': 'induction'} to {'material': 'ceramic', 'stovetop compatibility': 'gas'}; and another Tea Kettle {'material': 'glass', 'capacity': '2 liters', 'stovetop compatibility': 'induction'} to {'capacity': '1.5 liters', 'stovetop compatibility': 'gas'};",
+        "known_info": "You name is Aarav Anderson and your zip code is 19031.",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "106_0",
+          "name": "exchange_delivered_order_items",
+          "arguments": {
+            "order_id": "#W4316152",
+            "item_ids": [
+              "7292993796",
+              "7292993796"
+            ],
+            "new_item_ids": [
+              "3761330360",
+              "9647374798"
+            ],
+            "payment_method_id": "gift_card_7245904"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should exchange both tea kettles (same style) to the items requested"
+      ]
+    }
+  },
+  {
+    "id": "31",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You like to do one thing at a time, and reveal minimal information about yourself.",
+        "domain": "retail",
+        "reason_for_call": ". You just lost your tablet you just received and are in a bad mood. You want to know the tracking number of the order, and if the agent can help you refund or reorder the tablet. (You know it's a long shot, but you want to try). If not, cancel the charger you just bought, because it goes with the tablet... Also cancel the boot and keep the kettle (if not possible, do not do anything on that order), and return the sneaker.",
+        "known_info": "You are Olivia Lopez, and you live in Texas in zipcode 76171.",
+        "unknown_info": "You don't have an email."
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "31_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Olivia",
+            "last_name": "Lopez",
+            "zip": "76171"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_1",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "olivia_lopez_3865"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_2",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9319364"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_3",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9373487"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_4",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W2692684"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_5",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5481803"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_6",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W7449508"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_7",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9373487"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_8",
+          "name": "cancel_pending_order",
+          "arguments": {
+            "order_id": "#W9373487",
+            "reason": "no longer needed"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_9",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5481803"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_10",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W7449508"
+          },
+          "info": null
+        },
+        {
+          "action_id": "31_11",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W7449508",
+            "item_ids": [
+              "6477915553"
+            ],
+            "payment_method_id": "gift_card_7711863"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [
+        "746342064230"
+      ],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "273",
+    "description": {
+      "purpose": "User wants to change shipping address for pending order #W5782623.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to change the shipping address to 812 Oak Street, Charlotte, NC 28243. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the shipping address for your pending order #W5782623.",
+        "known_info": "You are Ivan Khan.\nYour email is ivan.khan6479@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "273_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "ivan.khan6479@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "273_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5782623"
+          },
+          "info": null
+        },
+        {
+          "action_id": "273_2",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W5782623",
+            "new_address": {
+              "address1": "812 Oak Street",
+              "address2": "Suite 995",
+              "city": "Charlotte",
+              "country": "USA",
+              "state": "NC",
+              "zip": "28243"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify shipping address for order #W5782623."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "238",
+    "description": {
+      "purpose": "User wants to check status of order #W4657527.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to know the status of your order and when it will arrive.",
+        "domain": "retail",
+        "reason_for_call": "You want to check the status of your order #W4657527.",
+        "known_info": "You are Mia Nguyen.\nYour email is mia.nguyen5072@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "238_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "mia.nguyen5072@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "238_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4657527"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should provide status information for order #W4657527."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "169",
+    "description": {
+      "purpose": "User wants to return items from delivered order #W7028924.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to return the following items: E-Reader. Confirm the return when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W7028924 but want to return some items.",
+        "known_info": "You are Omar Martin in zip code 80244.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "169_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Omar",
+            "last_name": "Martin",
+            "zip": "80244"
+          },
+          "info": null
+        },
+        {
+          "action_id": "169_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W7028924"
+          },
+          "info": null
+        },
+        {
+          "action_id": "169_2",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W7028924",
+            "item_ids": [
+              "7609274509"
+            ],
+            "payment_method_id": "gift_card_6784145"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process return for order #W7028924."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "208",
+    "description": {
+      "purpose": "User wants to change payment method for pending order #W4423731.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change the payment method to a different one. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the payment method for your pending order #W4423731.",
+        "known_info": "You are Evelyn Ahmed in zip code 80256.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "208_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Evelyn",
+            "last_name": "Ahmed",
+            "zip": "80256"
+          },
+          "info": null
+        },
+        {
+          "action_id": "208_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4423731"
+          },
+          "info": null
+        },
+        {
+          "action_id": "208_2",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "evelyn_ahmed_3960"
+          },
+          "info": null
+        },
+        {
+          "action_id": "208_3",
+          "name": "modify_pending_order_payment",
+          "arguments": {
+            "order_id": "#W4423731",
+            "new_payment_method_id": "gift_card_5683713"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify payment method for order #W4423731."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "212",
+    "description": {
+      "purpose": "User wants to update their default address.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to update your default address to 571 Oak Street, Columbus, OH 43197. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to update your default shipping address.",
+        "known_info": "You are Mei Ahmed in zip code 43197.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "212_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Mei",
+            "last_name": "Ahmed",
+            "zip": "43197"
+          },
+          "info": null
+        },
+        {
+          "action_id": "212_1",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "mei_ahmed_5058",
+            "new_address": {
+              "address1": "571 Oak Street",
+              "address2": "",
+              "city": "Columbus",
+              "country": "USA",
+              "state": "OH",
+              "zip": "43197"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should update default address for user mei_ahmed_5058."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "32",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You like to do one thing at a time, and reveal minimal information about yourself.",
+        "domain": "retail",
+        "reason_for_call": "You just lost your tablet you just received and are in a bad mood. You want to know the tracking number of the order, and if the agent can help you refund or reorder the tablet. (You know it's a long shot, but you want to try). If not, cancel the charger you just bought, because it goes with the tablet... Also cancel the boot and kettle, and return the sneaker.",
+        "known_info": "You are Olivia Lopez, and you live in Texas in zipcode 76171.",
+        "unknown_info": "You don't have an email."
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "32_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Olivia",
+            "last_name": "Lopez",
+            "zip": "76171"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_1",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "olivia_lopez_3865"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_2",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9319364"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_3",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9373487"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_4",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W2692684"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_5",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5481803"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_6",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W7449508"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_7",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9373487"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_8",
+          "name": "cancel_pending_order",
+          "arguments": {
+            "order_id": "#W9373487",
+            "reason": "no longer needed"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_9",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5481803"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_10",
+          "name": "cancel_pending_order",
+          "arguments": {
+            "order_id": "#W5481803",
+            "reason": "no longer needed"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_11",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W7449508"
+          },
+          "info": null
+        },
+        {
+          "action_id": "32_12",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W7449508",
+            "item_ids": [
+              "6477915553"
+            ],
+            "payment_method_id": "gift_card_7711863"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [
+        "746342064230"
+      ],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "109",
+    "description": {
+      "purpose": "Address change + exchange",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are organized and outgoing.  Make sure to mention the two address changes then the exchange.",
+        "domain": "retail",
+        "reason_for_call": "You live on Elm Avenue in Houston, and recently you moved to a new house on the same street and bought a luggage set sent to this new address. But you realize you have another order sent to the old address, and you want to change your wrong order address to the new home, and also your user default address to the new home. You do not want to reveal your address but the agent should be able to look it up in orders You do not want to reveal your address and insist the agent should be able to look it up in orders. You also want to exchange your tablet to the cheapest one due to moving costs.",
+        "known_info": "You name is Sophia Martin and your email is sophia.martin4832@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "110_0",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W1603792",
+            "address1": "592 Elm Avenue",
+            "address2": "Suite 978",
+            "city": "Houston",
+            "country": "USA",
+            "state": "TX",
+            "zip": "77242"
+          },
+          "info": null
+        },
+        {
+          "action_id": "110_1",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "sophia_martin_8570",
+            "address1": "592 Elm Avenue",
+            "address2": "Suite 978",
+            "city": "Houston",
+            "country": "USA",
+            "state": "TX",
+            "zip": "77242"
+          },
+          "info": null
+        },
+        {
+          "action_id": "110_2",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W1603792",
+            "item_ids": [
+              "6501071631"
+            ],
+            "new_item_ids": [
+              "2106335193"
+            ],
+            "payment_method_id": "credit_card_5694100"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should make changes to address on order and user profile",
+        "Agent should modify the pending order."
+      ]
+    }
+  },
+  {
+    "id": "78",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are sad, organized, pessimistic.",
+        "domain": "retail",
+        "reason_for_call": "You have a couple requests.\nFor order #W5056519, you want to change the address to be the same as order #W8277957. For order #W5056519, you want to  exchange Makeup Kit {'skin tone': 'light', 'kit size': 'professional', 'brand': 'Brand B'} to {'skin tone': 'dark', 'brand': 'Brand A'}. Finally, you want to cancel order #W5995614 because you ordered by mistake.",
+        "known_info": "Your name is Yara Muller and your email is yara.muller9246@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "78_0",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W5056519",
+            "address1": "380 Maple Drive",
+            "address2": "Suite 960",
+            "city": "San Diego",
+            "country": "USA",
+            "state": "CA",
+            "zip": "92101"
+          },
+          "info": null
+        },
+        {
+          "action_id": "78_1",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W5056519",
+            "item_ids": [
+              "7902309762"
+            ],
+            "new_item_ids": [
+              "1573035764"
+            ],
+            "payment_method_id": "credit_card_3095586"
+          },
+          "info": null
+        },
+        {
+          "action_id": "78_2",
+          "name": "cancel_pending_order",
+          "arguments": {
+            "order_id": "#W5995614",
+            "reason": "ordered by mistake"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "196",
+    "description": {
+      "purpose": "User wants to change payment method for pending order #W4862767.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change the payment method to a different one. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the payment method for your pending order #W4862767.",
+        "known_info": "You are Sophia Thomas in zip code 75396.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "196_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Sophia",
+            "last_name": "Thomas",
+            "zip": "75396"
+          },
+          "info": null
+        },
+        {
+          "action_id": "196_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4862767"
+          },
+          "info": null
+        },
+        {
+          "action_id": "196_2",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "sophia_thomas_5301"
+          },
+          "info": null
+        },
+        {
+          "action_id": "196_3",
+          "name": "modify_pending_order_payment",
+          "arguments": {
+            "order_id": "#W4862767",
+            "new_payment_method_id": "gift_card_9178183"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify payment method for order #W4862767."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "118",
+    "description": {
+      "purpose": "User wants to return items from delivered order #W5605613.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to return the following items: Digital Camera. Confirm the return when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W5605613 but want to return some items.",
+        "known_info": "You are Emma Smith in zip code 10192.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "118_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Emma",
+            "last_name": "Smith",
+            "zip": "10192"
+          },
+          "info": null
+        },
+        {
+          "action_id": "118_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5605613"
+          },
+          "info": null
+        },
+        {
+          "action_id": "118_2",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W5605613",
+            "item_ids": [
+              "7195021808"
+            ],
+            "payment_method_id": "paypal_6228291"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process return for order #W5605613."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "77",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "If the agent cannot help with placing a new order, ask to exchange your current bottle for the largest size available.",
+        "domain": "retail",
+        "reason_for_call": "You ordered a perfume and you just tried a little bit and you like it a lot. You want to get the maximum size available for it.",
+        "known_info": "You name is Ivan Johnson and your zip code is 94183.",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "77_0",
+          "name": "exchange_delivered_order_items",
+          "arguments": {
+            "order_id": "#W1671835",
+            "item_ids": [
+              "5081446110"
+            ],
+            "new_item_ids": [
+              "3399869890"
+            ],
+            "payment_method_id": "paypal_6918118"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "70",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are impatient, confident, direct, messy.",
+        "domain": "retail",
+        "reason_for_call": "You recently received a helmet but you are not happy with it and want to exchange. The size is too small and you want medium, plus you want high ventilation. If multiple colors are available, you prefer blue. You do not want the  You prefer original payment to pay for the price difference, and you want to know how much you need to pay today.",
+        "known_info": "You name is Sofia Hernandez and your zip code is 98193.",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "70_0",
+          "name": "exchange_delivered_order_items",
+          "arguments": {
+            "order_id": "#W3947049",
+            "item_ids": [
+              "3358616356"
+            ],
+            "new_item_ids": [
+              "9013366374"
+            ],
+            "payment_method_id": "credit_card_7901829"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [
+        "22.55"
+      ],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "41",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are brief and your memory is not too good sometimes, but you are polite.",
+        "domain": "retail",
+        "reason_for_call": "You just created your user id mei_patel_7272 and ordered some things, but you have two problems: first, the 1000-piece intermediate jigsaw might be too hard for your little kid, you wonder if you can change it to the easiest one with fewest pieces; second, you might have typed your address wrong. You want to check it, and potentially correct all order addresses and your user address. Make sure you mention these two problems at the same time in the same order.",
+        "known_info": "Your name is Mei Patel, and you live in 445 Maple Drive, Suite 394, Fort Worth, Texas, 76165.",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "41_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Mei",
+            "last_name": "Patel",
+            "zip": "76165"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_1",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mei_patel_7272"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_2",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9583042"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_3",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4082615"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_4",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W9583042",
+            "address1": "445 Maple Drive",
+            "address2": "Suite 394",
+            "city": "Fort Worth",
+            "state": "TX",
+            "country": "USA",
+            "zip": "76165"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_5",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W4082615",
+            "address1": "445 Maple Drive",
+            "address2": "Suite 394",
+            "city": "Fort Worth",
+            "state": "TX",
+            "country": "USA",
+            "zip": "76165"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_6",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "mei_patel_7272",
+            "address1": "445 Maple Drive",
+            "address2": "Suite 394",
+            "city": "Fort Worth",
+            "state": "TX",
+            "country": "USA",
+            "zip": "76165"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_7",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "1808611083"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_8",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4082615"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_9",
+          "name": "modify_pending_order_items",
+          "arguments": {
+            "order_id": "#W4082615",
+            "item_ids": [
+              "9779102705"
+            ],
+            "new_item_ids": [
+              "1096508426"
+            ],
+            "payment_method_id": "paypal_4768213"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "276",
+    "description": {
+      "purpose": "User wants to change shipping address for pending order #W3260419.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to change the shipping address to 338 Maple Street, Washington, DC 20080. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the shipping address for your pending order #W3260419.",
+        "known_info": "You are Yusuf Garcia in zip code 20080.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "276_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Yusuf",
+            "last_name": "Garcia",
+            "zip": "20080"
+          },
+          "info": null
+        },
+        {
+          "action_id": "276_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W3260419"
+          },
+          "info": null
+        },
+        {
+          "action_id": "276_2",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W3260419",
+            "new_address": {
+              "address1": "338 Maple Street",
+              "address2": "Suite 828",
+              "city": "Washington",
+              "country": "USA",
+              "state": "DC",
+              "zip": "20080"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify shipping address for order #W3260419."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "163",
+    "description": {
+      "purpose": "User wants to change payment method for pending order #W9160732.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change the payment method to a different one. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the payment method for your pending order #W9160732.",
+        "known_info": "You are Aarav Gonzalez in zip code 78268.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "163_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Aarav",
+            "last_name": "Gonzalez",
+            "zip": "78268"
+          },
+          "info": null
+        },
+        {
+          "action_id": "163_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9160732"
+          },
+          "info": null
+        },
+        {
+          "action_id": "163_2",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "aarav_gonzalez_5113"
+          },
+          "info": null
+        },
+        {
+          "action_id": "163_3",
+          "name": "modify_pending_order_payment",
+          "arguments": {
+            "order_id": "#W9160732",
+            "new_payment_method_id": "paypal_6121064"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify payment method for order #W9160732."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "171",
+    "description": {
+      "purpose": "User wants to check status of order #W4125188.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to know the status of your order and when it will arrive.",
+        "domain": "retail",
+        "reason_for_call": "You want to check the status of your order #W4125188.",
+        "known_info": "You are Mohamed Smith in zip code 77252.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "171_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Mohamed",
+            "last_name": "Smith",
+            "zip": "77252"
+          },
+          "info": null
+        },
+        {
+          "action_id": "171_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W4125188"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should provide status information for order #W4125188."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "139",
+    "description": {
+      "purpose": "User wants to update their default address.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to update your default address to 395 Park Street, Dallas, TX 75255. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to update your default shipping address.",
+        "known_info": "You are Yara Sanchez.\nYour email is yara.sanchez4385@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "139_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "yara.sanchez4385@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "139_1",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "yara_sanchez_1902",
+            "new_address": {
+              "address1": "395 Park Street",
+              "address2": "",
+              "city": "Dallas",
+              "country": "USA",
+              "state": "TX",
+              "zip": "75255"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should update default address for user yara_sanchez_1902."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "120",
+    "description": {
+      "purpose": "User wants to return items from delivered order #W6378322.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to return the following items: Smart Thermostat. Confirm the return when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W6378322 but want to return some items.",
+        "known_info": "You are Raj Anderson.\nYour email is raj.anderson6756@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "120_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "raj.anderson6756@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "120_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W6378322"
+          },
+          "info": null
+        },
+        {
+          "action_id": "120_2",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W6378322",
+            "item_ids": [
+              "3377900078"
+            ],
+            "payment_method_id": "gift_card_6662365"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process return for order #W6378322."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "146",
+    "description": {
+      "purpose": "User wants to return items from delivered order #W8808917.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to return the following items: Wireless Earbuds. Confirm the return when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W8808917 but want to return some items.",
+        "known_info": "You are Sofia Moore.\nYour email is sofia.moore4274@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "146_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "sofia.moore4274@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "146_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W8808917"
+          },
+          "info": null
+        },
+        {
+          "action_id": "146_2",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W8808917",
+            "item_ids": [
+              "8555936349"
+            ],
+            "payment_method_id": "credit_card_1893409"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process return for order #W8808917."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "39",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are a funny person with lots of jokes, and you want to make the agent laugh.",
+        "domain": "retail",
+        "reason_for_call": "You just moved from Florida to Phoenix. Unfortunately your address is still the old one, and you want to update it. Your current address should be in your recent order (you can mention this to the agent), and you do not want to reveal it. Also, you want to know what is the price of the cheapest available t-shirt right now, and if you can order it through the agent.",
+        "known_info": "You are fatima_taylor_3452, and you just moved from Florida (32169) to Phoenix (85033).",
+        "unknown_info": "You do not remember your email address"
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "39_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Fatima",
+            "last_name": "Taylor",
+            "zip": "85033"
+          },
+          "info": null
+        },
+        {
+          "action_id": "39_1",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Fatima",
+            "last_name": "Taylor",
+            "zip": "32169"
+          },
+          "info": null
+        },
+        {
+          "action_id": "39_2",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "fatima_taylor_3452"
+          },
+          "info": null
+        },
+        {
+          "action_id": "39_3",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5285031"
+          },
+          "info": null
+        },
+        {
+          "action_id": "39_4",
+          "name": "modify_user_address",
+          "arguments": {
+            "user_id": "fatima_taylor_3452",
+            "address1": "157 Oak Street",
+            "address2": "Suite 258",
+            "city": "Phoenix",
+            "state": "AZ",
+            "country": "USA",
+            "zip": "85033"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [
+        "46.66"
+      ],
+      "nl_assertions": null
+    }
+  },
+  {
+    "id": "225",
+    "description": {
+      "purpose": "User wants to change shipping address for pending order #W2989580.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to change the shipping address to 538 Main Street, San Antonio, TX 78227. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the shipping address for your pending order #W2989580.",
+        "known_info": "You are Anya Lee in zip code 78227.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "225_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Anya",
+            "last_name": "Lee",
+            "zip": "78227"
+          },
+          "info": null
+        },
+        {
+          "action_id": "225_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W2989580"
+          },
+          "info": null
+        },
+        {
+          "action_id": "225_2",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W2989580",
+            "new_address": {
+              "address1": "538 Main Street",
+              "address2": "Suite 936",
+              "city": "San Antonio",
+              "country": "USA",
+              "state": "TX",
+              "zip": "78227"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify shipping address for order #W2989580."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "140",
+    "description": {
+      "purpose": "User wants to check status of order #W3109038.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to know the status of your order and when it will arrive.",
+        "domain": "retail",
+        "reason_for_call": "You want to check the status of your order #W3109038.",
+        "known_info": "You are Daiki Moore.\nYour email is daiki.moore7228@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "140_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "daiki.moore7228@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "140_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W3109038"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should provide status information for order #W3109038."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "122",
+    "description": {
+      "purpose": "User wants to exchange Yoga Mat in order #W5931168.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to exchange the Yoga Mat (thickness: 6mm, material: PVC, color: green) for one with different options (thickness: 5mm, material: TPE, color: pink). Confirm the exchange when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W5931168 but want to exchange an item.",
+        "known_info": "You are Evelyn Anderson.\nYour email is evelyn.anderson6912@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "122_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "evelyn.anderson6912@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "122_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5931168"
+          },
+          "info": null
+        },
+        {
+          "action_id": "122_2",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "4635925001"
+          },
+          "info": null
+        },
+        {
+          "action_id": "122_3",
+          "name": "exchange_delivered_order_items",
+          "arguments": {
+            "order_id": "#W5931168",
+            "old_item_ids": [
+              "7510236436"
+            ],
+            "new_item_ids": [
+              "1794273251"
+            ],
+            "payment_method_id": "credit_card_8033789"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process exchange for order #W5931168."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "248",
+    "description": {
+      "purpose": "User wants to exchange Sneakers in order #W7156413.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to exchange the Sneakers (size: 10, color: gray, material: leather) for one with different options (size: 6, color: black, material: synthetic). Confirm the exchange when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W7156413 but want to exchange an item.",
+        "known_info": "You are Ethan Moore in zip code 90651.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "248_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Ethan",
+            "last_name": "Moore",
+            "zip": "90651"
+          },
+          "info": null
+        },
+        {
+          "action_id": "248_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W7156413"
+          },
+          "info": null
+        },
+        {
+          "action_id": "248_2",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "7471004230"
+          },
+          "info": null
+        },
+        {
+          "action_id": "248_3",
+          "name": "exchange_delivered_order_items",
+          "arguments": {
+            "order_id": "#W7156413",
+            "old_item_ids": [
+              "2509076505"
+            ],
+            "new_item_ids": [
+              "6477915553"
+            ],
+            "payment_method_id": "credit_card_6173085"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process exchange for order #W7156413."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "266",
+    "description": {
+      "purpose": "User wants to change shipping address for pending order #W2047423.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to change the shipping address to 104 Maple Street, Jacksonville, FL 32253. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the shipping address for your pending order #W2047423.",
+        "known_info": "You are Harper Li in zip code 32253.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "266_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Harper",
+            "last_name": "Li",
+            "zip": "32253"
+          },
+          "info": null
+        },
+        {
+          "action_id": "266_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W2047423"
+          },
+          "info": null
+        },
+        {
+          "action_id": "266_2",
+          "name": "modify_pending_order_address",
+          "arguments": {
+            "order_id": "#W2047423",
+            "new_address": {
+              "address1": "104 Maple Street",
+              "address2": "Suite 321",
+              "city": "Jacksonville",
+              "country": "USA",
+              "state": "FL",
+              "zip": "32253"
+            }
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify shipping address for order #W2047423."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "141",
+    "description": {
+      "purpose": "User wants to exchange Water Bottle in order #W6798117.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to exchange the Water Bottle (capacity: 500ml, material: glass, color: black) for one with different options (capacity: 500ml, material: stainless steel, color: black). Confirm the exchange when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W6798117 but want to exchange an item.",
+        "known_info": "You are Evelyn Davis in zip code 32136.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "141_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Evelyn",
+            "last_name": "Davis",
+            "zip": "32136"
+          },
+          "info": null
+        },
+        {
+          "action_id": "141_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W6798117"
+          },
+          "info": null
+        },
+        {
+          "action_id": "141_2",
+          "name": "get_product_details",
+          "arguments": {
+            "product_id": "8310926033"
+          },
+          "info": null
+        },
+        {
+          "action_id": "141_3",
+          "name": "exchange_delivered_order_items",
+          "arguments": {
+            "order_id": "#W6798117",
+            "old_item_ids": [
+              "8538875209"
+            ],
+            "new_item_ids": [
+              "3453331371"
+            ],
+            "payment_method_id": "paypal_9734841"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process exchange for order #W6798117."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "126",
+    "description": {
+      "purpose": "User wants to cancel pending order #W3168895.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your order because it is no longer needed. Confirm the cancellation when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to cancel your order #W3168895.",
+        "known_info": "You are Olivia Jackson in zip code 95119.",
+        "unknown_info": "You do not remember your email address."
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "126_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Olivia",
+            "last_name": "Jackson",
+            "zip": "95119"
+          },
+          "info": null
+        },
+        {
+          "action_id": "126_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W3168895"
+          },
+          "info": null
+        },
+        {
+          "action_id": "126_2",
+          "name": "cancel_pending_order",
+          "arguments": {
+            "order_id": "#W3168895",
+            "reason": "no longer needed"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should cancel order #W3168895."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "132",
+    "description": {
+      "purpose": "User wants to check status of order #W7810809.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to know the status of your order and when it will arrive.",
+        "domain": "retail",
+        "reason_for_call": "You want to check the status of your order #W7810809.",
+        "known_info": "You are Isabella Brown in zip code 46288.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "132_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Isabella",
+            "last_name": "Brown",
+            "zip": "46288"
+          },
+          "info": null
+        },
+        {
+          "action_id": "132_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W7810809"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should provide status information for order #W7810809."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "230",
+    "description": {
+      "purpose": "User wants to return items from delivered order #W5564375.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to return the following items: LED Light Bulb. Confirm the return when asked.",
+        "domain": "retail",
+        "reason_for_call": "You received your order #W5564375 but want to return some items.",
+        "known_info": "You are Mei Martin.\nYour email is mei.martin4637@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "230_0",
+          "name": "find_user_id_by_email",
+          "arguments": {
+            "email": "mei.martin4637@example.com"
+          },
+          "info": null
+        },
+        {
+          "action_id": "230_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W5564375"
+          },
+          "info": null
+        },
+        {
+          "action_id": "230_2",
+          "name": "return_delivered_order_items",
+          "arguments": {
+            "order_id": "#W5564375",
+            "item_ids": [
+              "5570660360"
+            ],
+            "payment_method_id": "paypal_2299608"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should process return for order #W5564375."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "243",
+    "description": {
+      "purpose": "User wants to change payment method for pending order #W9318778.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change the payment method to a different one. Confirm when asked.",
+        "domain": "retail",
+        "reason_for_call": "You want to change the payment method for your pending order #W9318778.",
+        "known_info": "You are Lucas Martin in zip code 20517.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "243_0",
+          "name": "find_user_id_by_name_zip",
+          "arguments": {
+            "first_name": "Lucas",
+            "last_name": "Martin",
+            "zip": "20517"
+          },
+          "info": null
+        },
+        {
+          "action_id": "243_1",
+          "name": "get_order_details",
+          "arguments": {
+            "order_id": "#W9318778"
+          },
+          "info": null
+        },
+        {
+          "action_id": "243_2",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "lucas_martin_4549"
+          },
+          "info": null
+        },
+        {
+          "action_id": "243_3",
+          "name": "modify_pending_order_payment",
+          "arguments": {
+            "order_id": "#W9318778",
+            "new_payment_method_id": "credit_card_7862034"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should modify payment method for order #W9318778."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "81",
+    "description": {
+      "purpose": null,
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are sad, independent, polite.",
+        "domain": "retail",
+        "reason_for_call": "Due to some life changes, you no longer need hiking boots, watch, keyboard, charger, jacket, and running shoes. If cancelling part of the order is not possible, you don't care, just cancel the whole order.",
+        "known_info": "You name is James Kim and your email is james.kim1995@example.com.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "81_0",
+          "name": "cancel_pending_order",
+          "arguments": {
+            "order_id": "#W3289292",
+            "reason": "no longer needed"
+          },
+          "info": null
+        },
+        {
+          "action_id": "81_1",
+          "name": "cancel_pending_order",
+          "arguments": {
+            "order_id": "#W9722559",
+            "reason": "no longer needed"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": null
+    }
+  }
+]

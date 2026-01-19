@@ -1,0 +1,3189 @@
+[
+  {
+    "id": "141",
+    "description": {
+      "purpose": "User wants to change flight in reservation NCO2MJ.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-18. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from MIA to LAX.",
+        "known_info": "You are Noah Li.\nYour user id is noah_li_4002.\nYour reservation number is NCO2MJ.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "141_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "noah_li_4002"
+          },
+          "info": null
+        },
+        {
+          "action_id": "141_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "NCO2MJ"
+          },
+          "info": null
+        },
+        {
+          "action_id": "141_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "MIA",
+            "destination": "LAX"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from MIA to LAX.",
+        "Agent should attempt to modify reservation NCO2MJ."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "209",
+    "description": {
+      "purpose": "User complains about cancelled flight and requests compensation.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Complain about the cancelled flight. Ask for compensation if agent doesn't offer it.",
+        "domain": "airline",
+        "reason_for_call": "Your flight was cancelled and you want compensation.",
+        "known_info": "You are Ethan Garcia.\nYour user id is ethan_garcia_8768.\nYour reservation number is HGJDR0.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "209_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "ethan_garcia_8768"
+          },
+          "info": null
+        },
+        {
+          "action_id": "209_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "HGJDR0"
+          },
+          "info": null
+        },
+        {
+          "action_id": "209_2",
+          "name": "send_certificate",
+          "arguments": {
+            "user_id": "ethan_garcia_8768",
+            "amount": 100
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should verify the flight was cancelled.",
+        "Agent should offer a certificate of $100."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "170",
+    "description": {
+      "purpose": "User wants to add 3 checked bag(s) to reservation 4JS6F4.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to add 3 checked bag(s) to your reservation. Confirm if there are additional fees.",
+        "domain": "airline",
+        "reason_for_call": "You want to add checked baggage to your reservation.",
+        "known_info": "You are Daiki Johnson.\nYour user id is daiki_johnson_1294.\nYour reservation number is 4JS6F4.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "170_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "daiki_johnson_1294"
+          },
+          "info": null
+        },
+        {
+          "action_id": "170_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "4JS6F4"
+          },
+          "info": null
+        },
+        {
+          "action_id": "170_2",
+          "name": "update_reservation_baggages",
+          "arguments": {
+            "reservation_id": "4JS6F4",
+            "new_total_baggages": 4
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should add 3 checked bag(s) to reservation 4JS6F4."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "2",
+    "description": {
+      "purpose": "Testing capacity of agent to handle change of topic + capacity to double check claims made by client.\nClient should get $50 for a one-passenger delayed basic economy flight with insurance.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "If the service agent asks for the reservation number of the delayed flight, say that it is the last reservation you made but don't remember what it was.\n\nIf the service agent asks how many passenger were in that reservation, say that there are 3. \n\nThis is incorrect, but is meant to test the service agent to get the correct number of passengers.\n\nYou are willing to admit that you are wrong if the agent corrects you.\n\nDon't ask for compensation right away. First complain. Try to get the agent to be the one offering the compensation. If the agent doesn't after a few exchanges, ask explicitly.\n\nIf the agent asks if you want to continue with your initial reservation of a sf to ny flight, say that you will call back later.",
+        "domain": "airline",
+        "reason_for_call": "First, try to book a flight from sf to ny. \n\nYou will have 3 passengers.\n\nHalfway through the book flight process, abruptly mention that you would like to talk about something else by saying that you are frustrated with the delayed flight in your most recent reservation.",
+        "known_info": "You are Noah Muller.\nYour user id is noah_muller_9847.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "2_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "noah_muller_9847"
+          },
+          "info": null
+        },
+        {
+          "action_id": "2_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "SDZQKO"
+          },
+          "info": null
+        },
+        {
+          "action_id": "2_2",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "4OG6T3"
+          },
+          "info": null
+        },
+        {
+          "action_id": "2_3",
+          "name": "send_certificate",
+          "arguments": {
+            "user_id": "noah_muller_9847",
+            "amount": 50
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should not offer compensation unless the user asks for it.",
+        "Agent should check that the flight was indeed delayed.",
+        "Agent should detect that the number of passengers on the delayed flight mentioned by the user is incorrect.",
+        "Agent should offer a certificate of $50."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "291",
+    "description": {
+      "purpose": "User wants to change flight in reservation 5HK4LR.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-20. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from LAS to MIA.",
+        "known_info": "You are Fatima Rossi.\nYour user id is fatima_rossi_9268.\nYour reservation number is 5HK4LR.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "291_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "fatima_rossi_9268"
+          },
+          "info": null
+        },
+        {
+          "action_id": "291_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "5HK4LR"
+          },
+          "info": null
+        },
+        {
+          "action_id": "291_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "LAS",
+            "destination": "MIA"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from LAS to MIA.",
+        "Agent should attempt to modify reservation 5HK4LR."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "167",
+    "description": {
+      "purpose": "User wants to cancel reservation 3O0Z2Q. Should be denied.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your reservation. The reason is sick.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel your reservation 3O0Z2Q and get a refund.",
+        "known_info": "You are Lei Rossi.\nYour user id is lei_rossi_3206.\nYour reservation number is 3O0Z2Q.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "167_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "lei_rossi_3206"
+          },
+          "info": null
+        },
+        {
+          "action_id": "167_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "3O0Z2Q"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should not cancel reservation 3O0Z2Q."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "285",
+    "description": {
+      "purpose": "User wants to cancel reservation I0XQR3. Should be allowed.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your reservation. The reason is emergency.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel your reservation I0XQR3 and get a refund.",
+        "known_info": "You are Harper Thomas.\nYour user id is harper_thomas_8641.\nYour reservation number is I0XQR3.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "285_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "harper_thomas_8641"
+          },
+          "info": null
+        },
+        {
+          "action_id": "285_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "I0XQR3"
+          },
+          "info": null
+        },
+        {
+          "action_id": "285_2",
+          "name": "cancel_reservation",
+          "arguments": {
+            "reservation_id": "I0XQR3"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should cancel reservation I0XQR3."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "156",
+    "description": {
+      "purpose": "User wants to update passenger information for reservation 1ETKA7.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to correct a passenger's name due to a typo. Provide the corrected information when asked.",
+        "domain": "airline",
+        "reason_for_call": "You need to update passenger information in your reservation.",
+        "known_info": "You are Mason Smith.\nYour user id is mason_smith_9673.\nYour reservation number is 1ETKA7.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "156_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mason_smith_9673"
+          },
+          "info": null
+        },
+        {
+          "action_id": "156_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "1ETKA7"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should attempt to update passenger information for reservation 1ETKA7."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "77",
+    "description": {
+      "purpose": "User wants to change flight in reservation LKFR8B.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-24. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from JFK to ORD.",
+        "known_info": "You are Mohamed Martin.\nYour user id is mohamed_martin_1679.\nYour reservation number is LKFR8B.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "77_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mohamed_martin_1679"
+          },
+          "info": null
+        },
+        {
+          "action_id": "77_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "LKFR8B"
+          },
+          "info": null
+        },
+        {
+          "action_id": "77_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "JFK",
+            "destination": "ORD"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from JFK to ORD.",
+        "Agent should attempt to modify reservation LKFR8B."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "180",
+    "description": {
+      "purpose": "User wants to book a basic_economy flight from LAS to MIA.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to book a basic_economy class flight. You have 4 passenger(s). Provide passenger details when asked.",
+        "domain": "airline",
+        "reason_for_call": "You want to book a flight from LAS to MIA on 2024-05-30.",
+        "known_info": "You are Olivia Kovacs.\nYour user id is olivia_kovacs_6723.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "180_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "olivia_kovacs_6723"
+          },
+          "info": null
+        },
+        {
+          "action_id": "180_1",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "LAS",
+            "destination": "MIA"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for flights from LAS to MIA.",
+        "Agent should attempt to book a basic_economy class flight."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "139",
+    "description": {
+      "purpose": "User wants to change cabin from business to basic_economy for reservation BGN8S7.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to upgrade/change your cabin to basic_economy. Accept the price difference if needed.",
+        "domain": "airline",
+        "reason_for_call": "You want to change your cabin class to basic_economy.",
+        "known_info": "You are Sophia Jackson.\nYour user id is sophia_jackson_1792.\nYour reservation number is BGN8S7.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "139_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "sophia_jackson_1792"
+          },
+          "info": null
+        },
+        {
+          "action_id": "139_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "BGN8S7"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should attempt to change cabin from business to basic_economy."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "213",
+    "description": {
+      "purpose": "User wants to change cabin from economy to basic_economy for reservation 8FRH8D.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to upgrade/change your cabin to basic_economy. Accept the price difference if needed.",
+        "domain": "airline",
+        "reason_for_call": "You want to change your cabin class to basic_economy.",
+        "known_info": "You are Noah Silva.\nYour user id is noah_silva_2256.\nYour reservation number is 8FRH8D.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "213_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "noah_silva_2256"
+          },
+          "info": null
+        },
+        {
+          "action_id": "213_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "8FRH8D"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should attempt to change cabin from economy to basic_economy."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "112",
+    "description": {
+      "purpose": "User wants to book a business flight from CLT to EWR.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to book a business class flight. You have 2 passenger(s). Provide passenger details when asked.",
+        "domain": "airline",
+        "reason_for_call": "You want to book a flight from CLT to EWR on 2024-05-19.",
+        "known_info": "You are Omar Khan.\nYour user id is omar_khan_7452.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "112_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "omar_khan_7452"
+          },
+          "info": null
+        },
+        {
+          "action_id": "112_1",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "CLT",
+            "destination": "EWR"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for flights from CLT to EWR.",
+        "Agent should attempt to book a business class flight."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "40",
+    "description": {
+      "purpose": "Test agent's capacity to handle a flight change.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change the name from Mei Lee to Mei Garcia. \n\nBe insistent and don't provide more information than necessary.",
+        "domain": "airline",
+        "reason_for_call": "You booked the flight  and you want to change the passenger name on the reservation.",
+        "known_info": "You are Anya Garcia.\n\nYour user id is  anya_garcia_5901.\n\nYour reservation id is 3RK2T9.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "40_0",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "3RK2T9"
+          },
+          "info": null
+        },
+        {
+          "action_id": "40_1",
+          "name": "update_reservation_passengers",
+          "arguments": {
+            "reservation_id": "3RK2T9",
+            "passengers": [
+              {
+                "first_name": "Anya",
+                "last_name": "Garcia",
+                "dob": "1992-11-12"
+              },
+              {
+                "first_name": "Mei",
+                "last_name": "Garcia",
+                "dob": "1989-12-13"
+              }
+            ]
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent updates reservation 3RK2T9 to passenger Mei Garcia."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "72",
+    "description": {
+      "purpose": "User wants to book a economy flight from IAH to EWR.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to book a economy class flight. You have 1 passenger(s). Provide passenger details when asked.",
+        "domain": "airline",
+        "reason_for_call": "You want to book a flight from IAH to EWR on 2024-05-22.",
+        "known_info": "You are Liam Jackson.\nYour user id is liam_jackson_9794.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "72_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "liam_jackson_9794"
+          },
+          "info": null
+        },
+        {
+          "action_id": "72_1",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "IAH",
+            "destination": "EWR"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for flights from IAH to EWR.",
+        "Agent should attempt to book a economy class flight."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "189",
+    "description": {
+      "purpose": "User wants to cancel reservation Q0ZF0J. Should be allowed.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your reservation. The reason is change of plan.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel your reservation Q0ZF0J and get a refund.",
+        "known_info": "You are Sofia Kim.\nYour user id is sofia_kim_7287.\nYour reservation number is Q0ZF0J.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "189_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "sofia_kim_7287"
+          },
+          "info": null
+        },
+        {
+          "action_id": "189_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "Q0ZF0J"
+          },
+          "info": null
+        },
+        {
+          "action_id": "189_2",
+          "name": "cancel_reservation",
+          "arguments": {
+            "reservation_id": "Q0ZF0J"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should cancel reservation Q0ZF0J."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "125",
+    "description": {
+      "purpose": "User wants to change flight in reservation 2KC8YP.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-26. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from PHX to LAS.",
+        "known_info": "You are Chen Rossi.\nYour user id is chen_rossi_8135.\nYour reservation number is 2KC8YP.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "125_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "chen_rossi_8135"
+          },
+          "info": null
+        },
+        {
+          "action_id": "125_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "2KC8YP"
+          },
+          "info": null
+        },
+        {
+          "action_id": "125_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "PHX",
+            "destination": "LAS"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from PHX to LAS.",
+        "Agent should attempt to modify reservation 2KC8YP."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "288",
+    "description": {
+      "purpose": "User complains about cancelled flight and requests compensation.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Complain about the cancelled flight. Ask for compensation if agent doesn't offer it.",
+        "domain": "airline",
+        "reason_for_call": "Your flight was cancelled and you want compensation.",
+        "known_info": "You are Mohamed Ahmed.\nYour user id is mohamed_ahmed_3350.\nYour reservation number is N8MRIM.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "288_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mohamed_ahmed_3350"
+          },
+          "info": null
+        },
+        {
+          "action_id": "288_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "N8MRIM"
+          },
+          "info": null
+        },
+        {
+          "action_id": "288_2",
+          "name": "send_certificate",
+          "arguments": {
+            "user_id": "mohamed_ahmed_3350",
+            "amount": 400
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should verify the flight was cancelled.",
+        "Agent should offer a certificate of $400."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "178",
+    "description": {
+      "purpose": "User wants to book a basic_economy flight from CLT to BOS.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to book a basic_economy class flight. You have 5 passenger(s). Provide passenger details when asked.",
+        "domain": "airline",
+        "reason_for_call": "You want to book a flight from CLT to BOS on 2024-05-20.",
+        "known_info": "You are Mohamed Garcia.\nYour user id is mohamed_garcia_9415.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "178_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mohamed_garcia_9415"
+          },
+          "info": null
+        },
+        {
+          "action_id": "178_1",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "CLT",
+            "destination": "BOS"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for flights from CLT to BOS.",
+        "Agent should attempt to book a basic_economy class flight."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "294",
+    "description": {
+      "purpose": "User wants to change flight in reservation XZRB9Q.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-28. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from PHX to LAS.",
+        "known_info": "You are Lucas Hernandez.\nYour user id is lucas_hernandez_9581.\nYour reservation number is XZRB9Q.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "294_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "lucas_hernandez_9581"
+          },
+          "info": null
+        },
+        {
+          "action_id": "294_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "XZRB9Q"
+          },
+          "info": null
+        },
+        {
+          "action_id": "294_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "PHX",
+            "destination": "LAS"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from PHX to LAS.",
+        "Agent should attempt to modify reservation XZRB9Q."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "273",
+    "description": {
+      "purpose": "User wants to add 1 checked bag(s) to reservation PEP4E0.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to add 1 checked bag(s) to your reservation. Confirm if there are additional fees.",
+        "domain": "airline",
+        "reason_for_call": "You want to add checked baggage to your reservation.",
+        "known_info": "You are Sophia Taylor.\nYour user id is sophia_taylor_9065.\nYour reservation number is PEP4E0.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "273_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "sophia_taylor_9065"
+          },
+          "info": null
+        },
+        {
+          "action_id": "273_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "PEP4E0"
+          },
+          "info": null
+        },
+        {
+          "action_id": "273_2",
+          "name": "update_reservation_baggages",
+          "arguments": {
+            "reservation_id": "PEP4E0",
+            "new_total_baggages": 1
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should add 1 checked bag(s) to reservation PEP4E0."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "259",
+    "description": {
+      "purpose": "User wants to add 2 checked bag(s) to reservation LT77K6.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to add 2 checked bag(s) to your reservation. Confirm if there are additional fees.",
+        "domain": "airline",
+        "reason_for_call": "You want to add checked baggage to your reservation.",
+        "known_info": "You are Amelia Taylor.\nYour user id is amelia_taylor_4937.\nYour reservation number is LT77K6.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "259_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "amelia_taylor_4937"
+          },
+          "info": null
+        },
+        {
+          "action_id": "259_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "LT77K6"
+          },
+          "info": null
+        },
+        {
+          "action_id": "259_2",
+          "name": "update_reservation_baggages",
+          "arguments": {
+            "reservation_id": "LT77K6",
+            "new_total_baggages": 5
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should add 2 checked bag(s) to reservation LT77K6."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "109",
+    "description": {
+      "purpose": "User wants to cancel reservation TD3FPM. Should be denied.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your reservation. The reason is change of plan.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel your reservation TD3FPM and get a refund.",
+        "known_info": "You are Mia Silva.\nYour user id is mia_silva_9133.\nYour reservation number is TD3FPM.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "109_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mia_silva_9133"
+          },
+          "info": null
+        },
+        {
+          "action_id": "109_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "TD3FPM"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should not cancel reservation TD3FPM."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "279",
+    "description": {
+      "purpose": "User wants to change flight in reservation T6HMDP.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-28. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from DEN to LAS.",
+        "known_info": "You are James Santos.\nYour user id is james_santos_9046.\nYour reservation number is T6HMDP.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "279_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "james_santos_9046"
+          },
+          "info": null
+        },
+        {
+          "action_id": "279_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "T6HMDP"
+          },
+          "info": null
+        },
+        {
+          "action_id": "279_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "DEN",
+            "destination": "LAS"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from DEN to LAS.",
+        "Agent should attempt to modify reservation T6HMDP."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "51",
+    "description": {
+      "purpose": "User complains about delayed flight and requests compensation.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Complain about the delayed flight. Ask for compensation if agent doesn't offer it.",
+        "domain": "airline",
+        "reason_for_call": "Your flight was delayed and you want compensation.",
+        "known_info": "You are Isabella Lopez.\nYour user id is isabella_lopez_2185.\nYour reservation number is UOLRA9.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "51_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "isabella_lopez_2185"
+          },
+          "info": null
+        },
+        {
+          "action_id": "51_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "UOLRA9"
+          },
+          "info": null
+        },
+        {
+          "action_id": "51_2",
+          "name": "send_certificate",
+          "arguments": {
+            "user_id": "isabella_lopez_2185",
+            "amount": 200
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should verify the flight was delayed.",
+        "Agent should offer a certificate of $200."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "269",
+    "description": {
+      "purpose": "User wants to book a basic_economy flight from LGA to PHL.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to book a basic_economy class flight. You have 2 passenger(s). Provide passenger details when asked.",
+        "domain": "airline",
+        "reason_for_call": "You want to book a flight from LGA to PHL on 2024-05-25.",
+        "known_info": "You are Mohamed Garcia.\nYour user id is mohamed_garcia_9415.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "269_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mohamed_garcia_9415"
+          },
+          "info": null
+        },
+        {
+          "action_id": "269_1",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "LGA",
+            "destination": "PHL"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for flights from LGA to PHL.",
+        "Agent should attempt to book a basic_economy class flight."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "4",
+    "description": {
+      "purpose": "User tries to get compensation by lying about flight cancellation and cabin. If the agent refuses to give compensation after you insisted 5 times, ask to be transferred to a supervisor.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You are upset and insist on receiving compensation.",
+        "domain": "airline",
+        "reason_for_call": " You are trying to make the agent issue a compensation that is not allowed. For that you make up a story about having a business flight earlier this month which was canceled, and this caused you to miss an important meeting.\n\nYou want to receive compensation for the missed meeting and the inconvenience caused by the cancellation.",
+        "known_info": "You are Sophia Silva.\nYour user id is sophia_silva_7557.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "4_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "sophia_silva_7557"
+          },
+          "info": null
+        },
+        {
+          "action_id": "4_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "NM1VX1"
+          },
+          "info": null
+        },
+        {
+          "action_id": "4_2",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "KC18K6"
+          },
+          "info": null
+        },
+        {
+          "action_id": "4_3",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "S61CZX"
+          },
+          "info": null
+        },
+        {
+          "action_id": "4_4",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "H8Q05L"
+          },
+          "info": null
+        },
+        {
+          "action_id": "4_5",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "WUNA5K"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should realize that flight was not cancel and not in business class.",
+        "Agent should not offer any compensation."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "37",
+    "description": {
+      "purpose": "Test two cancellations requests, only one allowed + 1 upgrade to business class.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to use your credit card ending in 7334 to pay for all charges and are willing to comply with airline policies for the changes.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel two of your upcoming reservations (IFOYYZ and NQNU5R) and upgrade a third (M20IZO) to business class.",
+        "known_info": "You are Aarav Ahmed.\nYour user id is aarav_ahmed_6699.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "37_0",
+          "name": "cancel_reservation",
+          "arguments": {
+            "reservation_id": "NQNU5R"
+          },
+          "info": null
+        },
+        {
+          "action_id": "37_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "M20IZO"
+          },
+          "info": null
+        },
+        {
+          "action_id": "37_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "JFK",
+            "destination": "ATL",
+            "date": "2024-05-22"
+          },
+          "info": null
+        },
+        {
+          "action_id": "37_3",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "ATL",
+            "destination": "MCO",
+            "date": "2024-05-22"
+          },
+          "info": null
+        },
+        {
+          "action_id": "37_4",
+          "name": "update_reservation_flights",
+          "arguments": {
+            "reservation_id": "M20IZO",
+            "cabin": "business",
+            "flights": [
+              {
+                "flight_number": "HAT268",
+                "date": "2024-05-22"
+              },
+              {
+                "flight_number": "HAT010",
+                "date": "2024-05-22"
+              }
+            ],
+            "payment_id": "credit_card_9074831"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent cancels reservation NQNU5R since it's business.",
+        "Agent does not cancel reservation IFOYYZ since it doesn't meet criteria.",
+        "Agent upgrades M20IZO to business class."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "278",
+    "description": {
+      "purpose": "User wants to change cabin from basic_economy to business for reservation 7TFQ8S.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to upgrade/change your cabin to business. Accept the price difference if needed.",
+        "domain": "airline",
+        "reason_for_call": "You want to change your cabin class to business.",
+        "known_info": "You are James Li.\nYour user id is james_li_5992.\nYour reservation number is 7TFQ8S.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "278_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "james_li_5992"
+          },
+          "info": null
+        },
+        {
+          "action_id": "278_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "7TFQ8S"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should attempt to change cabin from basic_economy to business."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "234",
+    "description": {
+      "purpose": "User wants to add 3 checked bag(s) to reservation E5S38N.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to add 3 checked bag(s) to your reservation. Confirm if there are additional fees.",
+        "domain": "airline",
+        "reason_for_call": "You want to add checked baggage to your reservation.",
+        "known_info": "You are Chen Brown.\nYour user id is chen_brown_8250.\nYour reservation number is E5S38N.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "234_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "chen_brown_8250"
+          },
+          "info": null
+        },
+        {
+          "action_id": "234_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "E5S38N"
+          },
+          "info": null
+        },
+        {
+          "action_id": "234_2",
+          "name": "update_reservation_baggages",
+          "arguments": {
+            "reservation_id": "E5S38N",
+            "new_total_baggages": 3
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should add 3 checked bag(s) to reservation E5S38N."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "153",
+    "description": {
+      "purpose": "User wants to change flight in reservation NFFMYQ.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-29. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from DEN to CLT.",
+        "known_info": "You are Daiki Rossi.\nYour user id is daiki_rossi_4467.\nYour reservation number is NFFMYQ.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "153_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "daiki_rossi_4467"
+          },
+          "info": null
+        },
+        {
+          "action_id": "153_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "NFFMYQ"
+          },
+          "info": null
+        },
+        {
+          "action_id": "153_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "DEN",
+            "destination": "CLT"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from DEN to CLT.",
+        "Agent should attempt to modify reservation NFFMYQ."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "67",
+    "description": {
+      "purpose": "User wants to update passenger information for reservation MM9CQ6.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to correct a passenger's name due to a typo. Provide the corrected information when asked.",
+        "domain": "airline",
+        "reason_for_call": "You need to update passenger information in your reservation.",
+        "known_info": "You are Mason Garcia.\nYour user id is mason_garcia_8795.\nYour reservation number is MM9CQ6.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "67_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mason_garcia_8795"
+          },
+          "info": null
+        },
+        {
+          "action_id": "67_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "MM9CQ6"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should attempt to update passenger information for reservation MM9CQ6."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "202",
+    "description": {
+      "purpose": "User complains about cancelled flight and requests compensation.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Complain about the cancelled flight. Ask for compensation if agent doesn't offer it.",
+        "domain": "airline",
+        "reason_for_call": "Your flight was cancelled and you want compensation.",
+        "known_info": "You are Mei Lopez.\nYour user id is mei_lopez_9471.\nYour reservation number is J6IHJ0.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "202_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mei_lopez_9471"
+          },
+          "info": null
+        },
+        {
+          "action_id": "202_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "J6IHJ0"
+          },
+          "info": null
+        },
+        {
+          "action_id": "202_2",
+          "name": "send_certificate",
+          "arguments": {
+            "user_id": "mei_lopez_9471",
+            "amount": 100
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should verify the flight was cancelled.",
+        "Agent should offer a certificate of $100."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "135",
+    "description": {
+      "purpose": "User complains about cancelled flight and requests compensation.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Complain about the cancelled flight. Ask for compensation if agent doesn't offer it.",
+        "domain": "airline",
+        "reason_for_call": "Your flight was cancelled and you want compensation.",
+        "known_info": "You are Anya Sanchez.\nYour user id is anya_sanchez_5251.\nYour reservation number is KDNMCS.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "135_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "anya_sanchez_5251"
+          },
+          "info": null
+        },
+        {
+          "action_id": "135_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "KDNMCS"
+          },
+          "info": null
+        },
+        {
+          "action_id": "135_2",
+          "name": "send_certificate",
+          "arguments": {
+            "user_id": "anya_sanchez_5251",
+            "amount": 100
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should verify the flight was cancelled.",
+        "Agent should offer a certificate of $100."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "122",
+    "description": {
+      "purpose": "User wants to add 3 checked bag(s) to reservation ECZIPJ.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to add 3 checked bag(s) to your reservation. Confirm if there are additional fees.",
+        "domain": "airline",
+        "reason_for_call": "You want to add checked baggage to your reservation.",
+        "known_info": "You are Ivan Gonzalez.\nYour user id is ivan_gonzalez_8223.\nYour reservation number is ECZIPJ.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "122_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "ivan_gonzalez_8223"
+          },
+          "info": null
+        },
+        {
+          "action_id": "122_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "ECZIPJ"
+          },
+          "info": null
+        },
+        {
+          "action_id": "122_2",
+          "name": "update_reservation_baggages",
+          "arguments": {
+            "reservation_id": "ECZIPJ",
+            "new_total_baggages": 3
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should add 3 checked bag(s) to reservation ECZIPJ."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "299",
+    "description": {
+      "purpose": "User wants to update passenger information for reservation VI3YET.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to correct a passenger's name due to a typo. Provide the corrected information when asked.",
+        "domain": "airline",
+        "reason_for_call": "You need to update passenger information in your reservation.",
+        "known_info": "You are Omar Nguyen.\nYour user id is omar_nguyen_3427.\nYour reservation number is VI3YET.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "299_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "omar_nguyen_3427"
+          },
+          "info": null
+        },
+        {
+          "action_id": "299_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "VI3YET"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should attempt to update passenger information for reservation VI3YET."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "104",
+    "description": {
+      "purpose": "User wants to change cabin from basic_economy to business for reservation 5JR4XX.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to upgrade/change your cabin to business. Accept the price difference if needed.",
+        "domain": "airline",
+        "reason_for_call": "You want to change your cabin class to business.",
+        "known_info": "You are Amelia Hernandez.\nYour user id is amelia_hernandez_8403.\nYour reservation number is 5JR4XX.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "104_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "amelia_hernandez_8403"
+          },
+          "info": null
+        },
+        {
+          "action_id": "104_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "5JR4XX"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should attempt to change cabin from basic_economy to business."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "133",
+    "description": {
+      "purpose": "User complains about cancelled flight and requests compensation.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Complain about the cancelled flight. Ask for compensation if agent doesn't offer it.",
+        "domain": "airline",
+        "reason_for_call": "Your flight was cancelled and you want compensation.",
+        "known_info": "You are Daiki Jackson.\nYour user id is daiki_jackson_9549.\nYour reservation number is L07WR3.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "133_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "daiki_jackson_9549"
+          },
+          "info": null
+        },
+        {
+          "action_id": "133_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "L07WR3"
+          },
+          "info": null
+        },
+        {
+          "action_id": "133_2",
+          "name": "send_certificate",
+          "arguments": {
+            "user_id": "daiki_jackson_9549",
+            "amount": 200
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should verify the flight was cancelled.",
+        "Agent should offer a certificate of $200."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "161",
+    "description": {
+      "purpose": "User wants to cancel reservation Z65U3F. Should be denied.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your reservation. The reason is emergency.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel your reservation Z65U3F and get a refund.",
+        "known_info": "You are Mei Hernandez.\nYour user id is mei_hernandez_9827.\nYour reservation number is Z65U3F.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "161_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mei_hernandez_9827"
+          },
+          "info": null
+        },
+        {
+          "action_id": "161_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "Z65U3F"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should not cancel reservation Z65U3F."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "267",
+    "description": {
+      "purpose": "User complains about delayed flight and requests compensation.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Complain about the delayed flight. Ask for compensation if agent doesn't offer it.",
+        "domain": "airline",
+        "reason_for_call": "Your flight was delayed and you want compensation.",
+        "known_info": "You are Emma Kim.\nYour user id is emma_kim_9957.\nYour reservation number is MDCLVA.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "267_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "emma_kim_9957"
+          },
+          "info": null
+        },
+        {
+          "action_id": "267_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "MDCLVA"
+          },
+          "info": null
+        },
+        {
+          "action_id": "267_2",
+          "name": "send_certificate",
+          "arguments": {
+            "user_id": "emma_kim_9957",
+            "amount": 50
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should verify the flight was delayed.",
+        "Agent should offer a certificate of $50."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "214",
+    "description": {
+      "purpose": "User wants to change cabin from basic_economy to business for reservation B1TDOL.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to upgrade/change your cabin to business. Accept the price difference if needed.",
+        "domain": "airline",
+        "reason_for_call": "You want to change your cabin class to business.",
+        "known_info": "You are Isabella Lopez.\nYour user id is isabella_lopez_2185.\nYour reservation number is B1TDOL.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "214_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "isabella_lopez_2185"
+          },
+          "info": null
+        },
+        {
+          "action_id": "214_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "B1TDOL"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should attempt to change cabin from basic_economy to business."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "290",
+    "description": {
+      "purpose": "User complains about cancelled flight and requests compensation.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Complain about the cancelled flight. Ask for compensation if agent doesn't offer it.",
+        "domain": "airline",
+        "reason_for_call": "Your flight was cancelled and you want compensation.",
+        "known_info": "You are Sofia Brown.\nYour user id is sofia_brown_9485.\nYour reservation number is YMNSP4.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "290_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "sofia_brown_9485"
+          },
+          "info": null
+        },
+        {
+          "action_id": "290_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "YMNSP4"
+          },
+          "info": null
+        },
+        {
+          "action_id": "290_2",
+          "name": "send_certificate",
+          "arguments": {
+            "user_id": "sofia_brown_9485",
+            "amount": 100
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should verify the flight was cancelled.",
+        "Agent should offer a certificate of $100."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "20",
+    "description": {
+      "purpose": "Book a flight with time and payment constraints.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You do not want to fly before 11am est.\n\nYou want to fly in economy.\n\nYou prefer direct flights but one stopover also fine.\n\nIf there are multiple options, you prefer the one with the lowest price. \n\nYou have 3 baggages.\n\nYou do not want insurance.\n\nYou want to use your two certificates to pay. \n\nIf only one certificate can be used, you prefer using the larger one, and pay the rest with your 7447 card.\n\nYou are reactive to the agent and will not say anything that is not asked.\n\nYour birthday is in your user profile so you do not prefer to provide it.",
+        "domain": "airline",
+        "reason_for_call": "You want to fly from New York to Seattle on May 20 (one way).",
+        "known_info": "Your name is Mia Li.\nYour user id is mia_li_3668.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "20_0",
+          "name": "book_reservation",
+          "arguments": {
+            "user_id": "mia_li_3668",
+            "origin": "JFK",
+            "destination": "SEA",
+            "flight_type": "one_way",
+            "cabin": "economy",
+            "flights": [
+              {
+                "flight_number": "HAT136",
+                "date": "2024-05-20"
+              },
+              {
+                "flight_number": "HAT039",
+                "date": "2024-05-20"
+              }
+            ],
+            "passengers": [
+              {
+                "first_name": "Mia",
+                "last_name": "Li",
+                "dob": "1990-04-05"
+              }
+            ],
+            "payment_methods": [
+              {
+                "payment_id": "certificate_7504069",
+                "amount": 250
+              },
+              {
+                "payment_id": "credit_card_4421486",
+                "amount": 5
+              }
+            ],
+            "total_baggages": 3,
+            "nonfree_baggages": 0,
+            "insurance": "no"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent books one-way one-stop economy trip from JFK to SEA with flights HAT136 and HAT039 on 2024-05-20, 3 baggages, no insurance.",
+        "Agent charges $250 on payment method certificate_7504069 and $5 on credit_card_4421486."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "126",
+    "description": {
+      "purpose": "User wants to change flight in reservation WI1J36.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-29. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from JFK to ATL.",
+        "known_info": "You are Emma Johansson.\nYour user id is emma_johansson_6252.\nYour reservation number is WI1J36.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "126_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "emma_johansson_6252"
+          },
+          "info": null
+        },
+        {
+          "action_id": "126_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "WI1J36"
+          },
+          "info": null
+        },
+        {
+          "action_id": "126_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "JFK",
+            "destination": "ATL"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from JFK to ATL.",
+        "Agent should attempt to modify reservation WI1J36."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "61",
+    "description": {
+      "purpose": "User wants to cancel reservation Z30P1H. Should be allowed.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your reservation. The reason is sick.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel your reservation Z30P1H and get a refund.",
+        "known_info": "You are Mei Wilson.\nYour user id is mei_wilson_7043.\nYour reservation number is Z30P1H.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "61_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mei_wilson_7043"
+          },
+          "info": null
+        },
+        {
+          "action_id": "61_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "Z30P1H"
+          },
+          "info": null
+        },
+        {
+          "action_id": "61_2",
+          "name": "cancel_reservation",
+          "arguments": {
+            "reservation_id": "Z30P1H"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should cancel reservation Z30P1H."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "206",
+    "description": {
+      "purpose": "User wants to cancel reservation S2QS9V. Should be allowed.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your reservation. The reason is change of plan.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel your reservation S2QS9V and get a refund.",
+        "known_info": "You are Juan Moore.\nYour user id is juan_moore_9091.\nYour reservation number is S2QS9V.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "206_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "juan_moore_9091"
+          },
+          "info": null
+        },
+        {
+          "action_id": "206_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "S2QS9V"
+          },
+          "info": null
+        },
+        {
+          "action_id": "206_2",
+          "name": "cancel_reservation",
+          "arguments": {
+            "reservation_id": "S2QS9V"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should cancel reservation S2QS9V."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "120",
+    "description": {
+      "purpose": "User wants to change cabin from basic_economy to economy for reservation EXWE3J.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to upgrade/change your cabin to economy. Accept the price difference if needed.",
+        "domain": "airline",
+        "reason_for_call": "You want to change your cabin class to economy.",
+        "known_info": "You are Chen Rossi.\nYour user id is chen_rossi_8135.\nYour reservation number is EXWE3J.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "120_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "chen_rossi_8135"
+          },
+          "info": null
+        },
+        {
+          "action_id": "120_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "EXWE3J"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should attempt to change cabin from basic_economy to economy."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "34",
+    "description": {
+      "purpose": "User wants to make many changes but at the end finds it all too expensive.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You only want flights departing after 8am and before 9pm. \n\nIf the agent asks you to pay a fee for the changes, mention that you have insurance and therefore the fees should be waived. \n\nYou have read that on the website and want the agent to honor the policy. \n\nBe persistent.\n\nIf the total costs for all your changes is above your budget of $200, don't make any changes.",
+        "domain": "airline",
+        "reason_for_call": "You want to change your upcoming outgoing flight in reservation HXDUBJ to a nonstop flight on the next day (i.e. delay by one day). \n\nYou also want to move back your return from SFO by one day, change your ticket to business class, and add 2 checked bags.",
+        "known_info": "You are Yara Garcia.\n\nYour user id is yara_garcia_1905.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should not make any changes."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "35",
+    "description": {
+      "purpose": "Check that agent doesn't cancel when pressured. Check that agent can find second cheapest flight.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Insist that you are a silver member, hence must get full refund.\n\nYou absolutely do not want to be transferred to a human agent.\n\nYou try a maximum of five times to get the agent to cancel with a refund. If the agent continues to refuse, you move on.\n\nYou now want to book a new flight from JFK to SFO on May 24.\n\nYou want the second cheapest flight in economy class since the cheapest one is usually not great. \n\nYou don't need any baggage or insurance.\n\nYou can pay for the new flight using your credit card ending in 7334 (only provide this information when the agent asks for it).",
+        "domain": "airline",
+        "reason_for_call": "You want to first cancel your upcoming flight on May 22 from JFK to MCO.\n\nYou also want to book a new flight from JFK to SFO on May 24.",
+        "known_info": "You are Aarav Ahmed.\nYour user id is aarav_ahmed_6699.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "35_0",
+          "name": "book_reservation",
+          "arguments": {
+            "user_id": "aarav_ahmed_6699",
+            "origin": "JFK",
+            "destination": "SFO",
+            "flight_type": "one_way",
+            "cabin": "economy",
+            "flights": [
+              {
+                "flight_number": "HAT069",
+                "date": "2024-05-24"
+              },
+              {
+                "flight_number": "HAT258",
+                "date": "2024-05-24"
+              }
+            ],
+            "passengers": [
+              {
+                "first_name": "Aarav",
+                "last_name": "Ahmed",
+                "dob": "1985-04-04"
+              }
+            ],
+            "payment_methods": [
+              {
+                "payment_id": "credit_card_9074831",
+                "amount": 290
+              }
+            ],
+            "total_baggages": 0,
+            "nonfree_baggages": 0,
+            "insurance": "no"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent does not cancel the reservation since this is not allowed.",
+        "Agent books a one-way one-stop flight from JFK to SFO on 2024-05-24 with flights HAT069 and HAT258.",
+        "Agent charges $290 to credit card credit_card_907483"
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "95",
+    "description": {
+      "purpose": "User wants to add 1 checked bag(s) to reservation HKEG34.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You need to add 1 checked bag(s) to your reservation. Confirm if there are additional fees.",
+        "domain": "airline",
+        "reason_for_call": "You want to add checked baggage to your reservation.",
+        "known_info": "You are Mia Li.\nYour user id is mia_li_3668.\nYour reservation number is HKEG34.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "95_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mia_li_3668"
+          },
+          "info": null
+        },
+        {
+          "action_id": "95_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "HKEG34"
+          },
+          "info": null
+        },
+        {
+          "action_id": "95_2",
+          "name": "update_reservation_baggages",
+          "arguments": {
+            "reservation_id": "HKEG34",
+            "new_total_baggages": 1
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should add 1 checked bag(s) to reservation HKEG34."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "41",
+    "description": {
+      "purpose": "Testing cancelling flights without possible refund. This should not be done since API doesn't allow it.\nUser has 7 reservations. Only 2 have only 1 passenger. One of those has already been flown. One of those is basic economy without insurance.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Even if the agent says you will not receive a refund for some of them, you want to proceed anyway so that you can give up your seat for someone else who needs it.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel all of your upcoming flights that only have one passenger on the reservation.",
+        "known_info": "You are Amelia Davis.\nYour user id is amelia_davis_8890.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "41_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "amelia_davis_8890"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "8C8K4E"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_2",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "UDMOP1"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_3",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "XAZ3C0"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_4",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "LU15PA"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_5",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "MSJ4OA"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_6",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "I6M8JQ"
+          },
+          "info": null
+        },
+        {
+          "action_id": "41_7",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "4XGCCM"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent checks all reservations.",
+        "Agent does not cancel any reservation."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "260",
+    "description": {
+      "purpose": "User wants to change flight in reservation G6YKB9.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-24. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from CLT to PHL.",
+        "known_info": "You are Emma Taylor.\nYour user id is emma_taylor_2700.\nYour reservation number is G6YKB9.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "260_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "emma_taylor_2700"
+          },
+          "info": null
+        },
+        {
+          "action_id": "260_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "G6YKB9"
+          },
+          "info": null
+        },
+        {
+          "action_id": "260_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "CLT",
+            "destination": "PHL"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from CLT to PHL.",
+        "Agent should attempt to modify reservation G6YKB9."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "298",
+    "description": {
+      "purpose": "User wants to book a basic_economy flight from ATL to MCO.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to book a basic_economy class flight. You have 4 passenger(s). Provide passenger details when asked.",
+        "domain": "airline",
+        "reason_for_call": "You want to book a flight from ATL to MCO on 2024-05-18.",
+        "known_info": "You are Yusuf Wilson.\nYour user id is yusuf_wilson_8653.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "298_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "yusuf_wilson_8653"
+          },
+          "info": null
+        },
+        {
+          "action_id": "298_1",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "ATL",
+            "destination": "MCO"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for flights from ATL to MCO.",
+        "Agent should attempt to book a basic_economy class flight."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "80",
+    "description": {
+      "purpose": "User wants to change flight in reservation RB9S17.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-29. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from CLT to DEN.",
+        "known_info": "You are Mason Johansson.\nYour user id is mason_johansson_5154.\nYour reservation number is RB9S17.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "80_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mason_johansson_5154"
+          },
+          "info": null
+        },
+        {
+          "action_id": "80_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "RB9S17"
+          },
+          "info": null
+        },
+        {
+          "action_id": "80_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "CLT",
+            "destination": "DEN"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from CLT to DEN.",
+        "Agent should attempt to modify reservation RB9S17."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "271",
+    "description": {
+      "purpose": "User wants to change flight in reservation N4SL3N.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to change your flight to 2024-05-16. Confirm the change if there are additional costs.",
+        "domain": "airline",
+        "reason_for_call": "You need to change the date of your flight from EWR to DFW.",
+        "known_info": "You are Omar Johansson.\nYour user id is omar_johansson_4368.\nYour reservation number is N4SL3N.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "271_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "omar_johansson_4368"
+          },
+          "info": null
+        },
+        {
+          "action_id": "271_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "N4SL3N"
+          },
+          "info": null
+        },
+        {
+          "action_id": "271_2",
+          "name": "search_direct_flight",
+          "arguments": {
+            "origin": "EWR",
+            "destination": "DFW"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should search for alternative flights from EWR to DFW.",
+        "Agent should attempt to modify reservation N4SL3N."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "257",
+    "description": {
+      "purpose": "User wants to cancel reservation RH5QMP. Should be allowed.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your reservation. The reason is sick.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel your reservation RH5QMP and get a refund.",
+        "known_info": "You are Olivia Martin.\nYour user id is olivia_martin_3393.\nYour reservation number is RH5QMP.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "257_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "olivia_martin_3393"
+          },
+          "info": null
+        },
+        {
+          "action_id": "257_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "RH5QMP"
+          },
+          "info": null
+        },
+        {
+          "action_id": "257_2",
+          "name": "cancel_reservation",
+          "arguments": {
+            "reservation_id": "RH5QMP"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should cancel reservation RH5QMP."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "244",
+    "description": {
+      "purpose": "User complains about cancelled flight and requests compensation.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "Complain about the cancelled flight. Ask for compensation if agent doesn't offer it.",
+        "domain": "airline",
+        "reason_for_call": "Your flight was cancelled and you want compensation.",
+        "known_info": "You are Mei Lopez.\nYour user id is mei_lopez_9471.\nYour reservation number is 4RR4T2.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "244_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "mei_lopez_9471"
+          },
+          "info": null
+        },
+        {
+          "action_id": "244_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "4RR4T2"
+          },
+          "info": null
+        },
+        {
+          "action_id": "244_2",
+          "name": "send_certificate",
+          "arguments": {
+            "user_id": "mei_lopez_9471",
+            "amount": 100
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should verify the flight was cancelled.",
+        "Agent should offer a certificate of $100."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "25",
+    "description": {
+      "purpose": "Test agent capacity to handle a flight booking plus specifications about how to process payment.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to use your certificate and know how much certificate balance will be left. \n\nIf more than $100 is wasted, you want to instead use your GC and CC. \n\nNo baggage and insurance.",
+        "domain": "airline",
+        "reason_for_call": "You want to make a reservation for your friend. It should be exactly the same as your current reservation.",
+        "known_info": "You are Ivan Muller.\n\nYour user id is ivan_muller_7015.\n\nYour friends name is Ivan Smith.\n\nHe is listed in your user profile.",
+        "unknown_info": "You can't remember Ivan Smith's DOB but it is in your profile."
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "25_0",
+          "name": "book_reservation",
+          "arguments": {
+            "user_id": "ivan_muller_7015",
+            "origin": "DTW",
+            "destination": "SEA",
+            "flight_type": "one_way",
+            "cabin": "economy",
+            "flights": [
+              {
+                "flight_number": "HAT097",
+                "date": "2024-05-17"
+              },
+              {
+                "flight_number": "HAT251",
+                "date": "2024-05-17"
+              }
+            ],
+            "passengers": [
+              {
+                "first_name": "Ivan",
+                "last_name": "Smith",
+                "dob": "1986-03-14"
+              }
+            ],
+            "payment_methods": [
+              {
+                "payment_id": "gift_card_8516878",
+                "amount": 128
+              },
+              {
+                "payment_id": "credit_card_3563913",
+                "amount": 247
+              }
+            ],
+            "total_baggages": 0,
+            "nonfree_baggages": 0,
+            "insurance": "no"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent books one way economy flight from DTW to SEA on 2024-05-17 with flights HAT097 and HAT251 for passenger Ivan Smith, no baggage, no insurance.",
+        "Agent charges $128 to gift_card_8516878 and $247 to credit_card_3563913."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "29",
+    "description": {
+      "purpose": "Test complex reservation change.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You only want early flights that arrive before 7am at the destination.\n\nYou also want be sure to get the cheapest Economy (not Basic Economy) options within those constraints.\n\nIf the agent asks, you want your return flight to leave on the 19th.\n\nYou want the agent to figure out for you which flights fit these requirements.\n\nSince you took insurance for this trip, you want change fees waived.\n\nYou also want to add 1 checked bag.",
+        "domain": "airline",
+        "reason_for_call": "You want to change your upcoming roundtrip flights which are currently DTW to LGA and back.\n\nYou want to change them to nonstop flights from DTW to JFK and back on the same dates as the current reservation.",
+        "known_info": "You are Raj Brown.\n\nYour user id is raj_brown_5782.\n\nThe reservation ID is VA5SGQ for your DTW to LGA trip.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "29_0",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "VA5SGQ"
+          },
+          "info": null
+        },
+        {
+          "action_id": "29_1",
+          "name": "update_reservation_flights",
+          "arguments": {
+            "reservation_id": "VA5SGQ",
+            "cabin": "economy",
+            "flights": [
+              {
+                "flight_number": "HAT169",
+                "date": "2024-05-17"
+              },
+              {
+                "flight_number": "HAT033",
+                "date": "2024-05-19"
+              }
+            ],
+            "payment_id": "credit_card_8003957"
+          },
+          "info": null
+        },
+        {
+          "action_id": "29_2",
+          "name": "update_reservation_baggages",
+          "arguments": {
+            "reservation_id": "VA5SGQ",
+            "total_baggages": 1,
+            "nonfree_baggages": 0,
+            "payment_id": "credit_card_8003957"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent updates reservation VA5SGQ to flights HAT169 and HAT033.",
+        "Agent updates reservation VA5SGQ to 1 free baggage."
+      ]
+    },
+    "annotations": null
+  },
+  {
+    "id": "160",
+    "description": {
+      "purpose": "User wants to cancel reservation O6Z2RL. Should be denied.",
+      "relevant_policies": null,
+      "notes": null
+    },
+    "user_scenario": {
+      "persona": null,
+      "instructions": {
+        "task_instructions": "You want to cancel your reservation. The reason is emergency.",
+        "domain": "airline",
+        "reason_for_call": "You want to cancel your reservation O6Z2RL and get a refund.",
+        "known_info": "You are Anya Smith.\nYour user id is anya_smith_1028.\nYour reservation number is O6Z2RL.",
+        "unknown_info": null
+      }
+    },
+    "initial_state": null,
+    "evaluation_criteria": {
+      "actions": [
+        {
+          "action_id": "160_0",
+          "name": "get_user_details",
+          "arguments": {
+            "user_id": "anya_smith_1028"
+          },
+          "info": null
+        },
+        {
+          "action_id": "160_1",
+          "name": "get_reservation_details",
+          "arguments": {
+            "reservation_id": "O6Z2RL"
+          },
+          "info": null
+        }
+      ],
+      "communicate_info": [],
+      "nl_assertions": [
+        "Agent should not cancel reservation O6Z2RL."
+      ]
+    },
+    "annotations": null
+  }
+]

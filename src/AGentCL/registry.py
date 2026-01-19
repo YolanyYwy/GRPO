@@ -39,6 +39,27 @@ from AGentCL.domains.telecom.environment import (
 from AGentCL.domains.telecom.environment import (
     get_tasks_split as telecom_domain_get_tasks_split,
 )
+from AGentCL.domains.delivery.environment import (
+    get_environment as delivery_domain_get_environment,
+)
+from AGentCL.domains.delivery.environment import get_tasks as delivery_domain_get_tasks
+from AGentCL.domains.delivery.environment import (
+    get_tasks_split as delivery_domain_get_tasks_split,
+)
+from AGentCL.domains.instore.environment import (
+    get_environment as instore_domain_get_environment,
+)
+from AGentCL.domains.instore.environment import get_tasks as instore_domain_get_tasks
+from AGentCL.domains.instore.environment import (
+    get_tasks_split as instore_domain_get_tasks_split,
+)
+from AGentCL.domains.ota.environment import (
+    get_environment as ota_domain_get_environment,
+)
+from AGentCL.domains.ota.environment import get_tasks as ota_domain_get_tasks
+from AGentCL.domains.ota.environment import (
+    get_tasks_split as ota_domain_get_tasks_split,
+)
 from AGentCL.environment.environment import Environment
 from AGentCL.user.base import BaseUser
 from AGentCL.user.user_simulator import DummyUser, UserSimulator
@@ -242,6 +263,27 @@ try:
         telecom_domain_get_tasks,
         "telecom-workflow",
         get_task_splits=telecom_domain_get_tasks_split,
+    )
+
+    registry.register_domain(delivery_domain_get_environment, "delivery")
+    registry.register_tasks(
+        delivery_domain_get_tasks,
+        "delivery",
+        get_task_splits=delivery_domain_get_tasks_split,
+    )
+
+    registry.register_domain(instore_domain_get_environment, "instore")
+    registry.register_tasks(
+        instore_domain_get_tasks,
+        "instore",
+        get_task_splits=instore_domain_get_tasks_split,
+    )
+
+    registry.register_domain(ota_domain_get_environment, "ota")
+    registry.register_tasks(
+        ota_domain_get_tasks,
+        "ota",
+        get_task_splits=ota_domain_get_tasks_split,
     )
 
     logger.debug(
