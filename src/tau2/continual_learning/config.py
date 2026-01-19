@@ -151,7 +151,7 @@ class GRPOConfig:
             raise ValueError(f"cl_algorithm must be one of {valid_algorithms}, got {self.cl_algorithm}")
 
         # Validate task order
-        valid_domains = ["airline", "retail", "telecom"]
+        valid_domains = ["airline", "retail", "telecom", "delivery", "instore", "ota"]
         for domain in self.task_order:
             if domain not in valid_domains:
                 raise ValueError(f"Invalid domain in task_order: {domain}. Must be one of {valid_domains}")

@@ -308,9 +308,9 @@ class Environment:
             return actions
 
         if initialization_data is not None:
-            if initialization_data.agent_data is not None:
+            if initialization_data.agent_data is not None and self.tools is not None:
                 self.tools.update_db(initialization_data.agent_data)
-            if initialization_data.user_data is not None:
+            if initialization_data.user_data is not None and self.user_tools is not None:
                 self.user_tools.update_db(initialization_data.user_data)
 
         if initialization_actions is not None:

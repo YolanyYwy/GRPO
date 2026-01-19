@@ -10,9 +10,9 @@ from AGentCL.environment.db import DB
 class Location(BaseModel):
     """Location information."""
 
-    address: str = Field(description="Address")
-    longitude: float = Field(description="Longitude")
-    latitude: float = Field(description="Latitude")
+    address: str = Field(default="", description="Address")
+    longitude: float = Field(default=0.0, description="Longitude")
+    latitude: float = Field(default=0.0, description="Latitude")
 
     def __repr__(self):
         return f"Location(address={self.address}, longitude={self.longitude}, latitude={self.latitude})"
@@ -21,11 +21,11 @@ class Location(BaseModel):
 class ShopProduct(BaseModel):
     """Product in a shop."""
 
-    product_id: str = Field(description="Product ID")
-    name: str = Field(description="Product name")
-    shop_id: str = Field(description="Shop ID")
-    shop_name: str = Field(description="Shop name")
-    price: float = Field(description="Product price")
+    product_id: str = Field(default="", description="Product ID")
+    name: str = Field(default="", description="Product name")
+    shop_id: str = Field(default="", description="Shop ID")
+    shop_name: str = Field(default="", description="Shop name")
+    price: float = Field(default=0.0, description="Product price")
     quantity: int = Field(default=1, description="Product quantity")
     tags: List[str] = Field(default_factory=list, description="Product tags")
 
@@ -42,11 +42,11 @@ class ShopProduct(BaseModel):
 class Shop(BaseModel):
     """Shop information."""
 
-    shop_id: str = Field(description="Shop ID")
-    shop_name: str = Field(description="Shop name")
-    score: float = Field(description="Shop rating")
-    location: Location = Field(description="Shop location")
-    tags: List[str] = Field(description="Shop tags")
+    shop_id: str = Field(default="", description="Shop ID")
+    shop_name: str = Field(default="", description="Shop name")
+    score: float = Field(default=0.0, description="Shop rating")
+    location: Location = Field(default_factory=Location, description="Shop location")
+    tags: List[str] = Field(default_factory=list, description="Shop tags")
     enable_book: bool = Field(default=False, description="Whether seat booking is enabled")
     book_price: float = Field(default=0.0, description="Seat booking price")
     enable_reservation: bool = Field(default=False, description="Whether service reservation is enabled")
@@ -79,15 +79,15 @@ class Order(BaseModel):
     """Order information."""
 
     order_id: str = Field(description="Order ID")
-    order_type: str = Field(description="Order type")
-    user_id: str = Field(description="User ID")
-    shop_id: str = Field(description="Shop ID")
-    product_id: str = Field(description="Product ID")
-    quantity: int = Field(description="Product quantity")
-    total_price: float = Field(description="Total price")
-    create_time: str = Field(description="Order creation time")
-    update_time: str = Field(description="Order update time")
-    status: str = Field(description="Order status")
+    order_type: str = Field(default="", description="Order type")
+    user_id: str = Field(default="", description="User ID")
+    shop_id: str = Field(default="", description="Shop ID")
+    product_id: str = Field(default="", description="Product ID")
+    quantity: int = Field(default=1, description="Product quantity")
+    total_price: float = Field(default=0.0, description="Total price")
+    create_time: str = Field(default="", description="Order creation time")
+    update_time: str = Field(default="", description="Order update time")
+    status: str = Field(default="pending", description="Order status")
 
     def __repr__(self):
         return (f"Order(order_id={self.order_id}, "
@@ -106,13 +106,13 @@ class BookInfo(BaseModel):
     """Seat/table booking information."""
 
     book_id: str = Field(description="Booking ID")
-    shop_id: str = Field(description="Shop ID")
-    book_time: str = Field(description="Booking time")
-    customer_id: str = Field(description="Customer ID")
-    customer_count: int = Field(description="Number of customers")
-    book_price: float = Field(description="Booking price")
-    status: str = Field(description="Booking status")
-    update_time: str = Field(description="Last update time")
+    shop_id: str = Field(default="", description="Shop ID")
+    book_time: str = Field(default="", description="Booking time")
+    customer_id: str = Field(default="", description="Customer ID")
+    customer_count: int = Field(default=1, description="Number of customers")
+    book_price: float = Field(default=0.0, description="Booking price")
+    status: str = Field(default="pending", description="Booking status")
+    update_time: str = Field(default="", description="Last update time")
 
     def __repr__(self):
         return (f"BookInfo(book_id={self.book_id}, "
@@ -129,12 +129,12 @@ class ReservationInfo(BaseModel):
     """Service reservation information."""
 
     reservation_id: str = Field(description="Reservation ID")
-    shop_id: str = Field(description="Shop ID")
-    reservation_time: str = Field(description="Reservation time")
-    customer_id: str = Field(description="Customer ID")
-    customer_count: int = Field(description="Number of customers")
-    status: str = Field(description="Reservation status")
-    update_time: str = Field(description="Last update time")
+    shop_id: str = Field(default="", description="Shop ID")
+    reservation_time: str = Field(default="", description="Reservation time")
+    customer_id: str = Field(default="", description="Customer ID")
+    customer_count: int = Field(default=1, description="Number of customers")
+    status: str = Field(default="pending", description="Reservation status")
+    update_time: str = Field(default="", description="Last update time")
 
     def __repr__(self):
         return (f"ReservationInfo(reservation_id={self.reservation_id}, "
@@ -164,6 +164,26 @@ class InstoreDB(DB):
     reservations: Dict[str, ReservationInfo] = Field(
         default_factory=dict,
         description="Dictionary of service reservations indexed by reservation ID"
+    )
+    time: Optional[str] = Field(
+        default=None,
+        description="Current time"
+    )
+    weather: Optional[List[Dict[str, Any]]] = Field(
+        default=None,
+        description="Weather information"
+    )
+    location: Optional[List[Location]] = Field(
+        default=None,
+        description="User location information"
+    )
+    user_id: Optional[str] = Field(
+        default=None,
+        description="Current user ID"
+    )
+    user_historical_behaviors: Optional[Dict[str, Any]] = Field(
+        default=None,
+        description="User historical behaviors"
     )
 
     def get_statistics(self) -> dict[str, Any]:

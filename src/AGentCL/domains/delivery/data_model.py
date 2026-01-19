@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, List, Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from AGentCL.environment.db import DB
 
@@ -10,9 +10,9 @@ from AGentCL.environment.db import DB
 class Location(BaseModel):
     """Location information."""
 
-    address: str = Field(description="Address")
-    longitude: float = Field(description="Longitude")
-    latitude: float = Field(description="Latitude")
+    address: str = Field(default="", description="Address")
+    longitude: float = Field(default=0.0, description="Longitude")
+    latitude: float = Field(default=0.0, description="Latitude")
 
     def __repr__(self):
         return f"Location(address={self.address}, longitude={self.longitude}, latitude={self.latitude})"
@@ -21,14 +21,22 @@ class Location(BaseModel):
 class StoreProduct(BaseModel):
     """Product in a store."""
 
-    product_id: str = Field(description="Product ID")
-    name: str = Field(description="Product name")
-    store_id: str = Field(description="Store ID")
-    store_name: str = Field(description="Store name")
-    price: float = Field(description="Product price")
+    product_id: str = Field(default="", description="Product ID")
+    name: str = Field(default="", description="Product name")
+    store_id: str = Field(default="", description="Store ID")
+    store_name: str = Field(default="", description="Store name")
+    price: float = Field(default=0.0, description="Product price")
     quantity: int = Field(default=1, description="Product quantity")
     attributes: str = Field(default="", description="Product attributes")
     tags: List[str] = Field(default_factory=list, description="Product tags")
+
+    @field_validator('attributes', mode='before')
+    @classmethod
+    def convert_attributes_to_string(cls, v):
+        """Convert attributes from list to string if needed."""
+        if isinstance(v, list):
+            return "" if not v else ", ".join(str(item) for item in v)
+        return v if v is not None else ""
 
     def __repr__(self):
         return (f"StoreProduct(store_name={self.store_name}, "
@@ -72,19 +80,32 @@ class Order(BaseModel):
     """Order information."""
 
     order_id: str = Field(description="Order ID")
-    order_type: str = Field(description="Order type")
-    user_id: str = Field(description="User ID")
-    store_id: str = Field(description="Store ID")
-    location: Location = Field(description="Delivery location")
-    dispatch_time: str = Field(description="Dispatch time")
-    shipping_time: float = Field(description="Shipping time in minutes")
-    delivery_time: str = Field(description="Delivery time")
-    total_price: float = Field(description="Total price")
-    create_time: str = Field(description="Order creation time")
-    update_time: str = Field(description="Order update time")
+    order_type: str = Field(default="", description="Order type")
+    user_id: str = Field(default="", description="User ID")
+    store_id: str = Field(default="", description="Store ID")
+    location: Location = Field(default_factory=Location, description="Delivery location")
+    dispatch_time: str = Field(default="", description="Dispatch time")
+    shipping_time: float = Field(default=0.0, description="Shipping time in minutes")
+    delivery_time: str = Field(default="", description="Delivery time")
+    total_price: float = Field(default=0.0, description="Total price")
+    create_time: str = Field(default="", description="Order creation time")
+    update_time: str = Field(default="", description="Order update time")
     note: str = Field(default="", description="Order note")
-    products: List[StoreProduct] = Field(description="Ordered products")
-    status: str = Field(description="Order status")
+    products: List[StoreProduct] = Field(default_factory=list, description="Ordered products")
+    status: str = Field(default="pending", description="Order status")
+
+    @field_validator('shipping_time', mode='before')
+    @classmethod
+    def convert_shipping_time(cls, v):
+        """Convert shipping_time to float if needed."""
+        if v is None:
+            return 0.0
+        if isinstance(v, str):
+            try:
+                return float(v)
+            except ValueError:
+                return 0.0
+        return float(v)
 
     def __repr__(self):
         products_repr = "\n".join(repr(p) for p in self.products)
@@ -123,6 +144,26 @@ class DeliveryDB(DB):
     orders: Dict[str, Order] = Field(
         default_factory=dict,
         description="Dictionary of orders indexed by order ID"
+    )
+    time: Optional[str] = Field(
+        default=None,
+        description="Current time"
+    )
+    weather: Optional[List[Dict[str, Any]]] = Field(
+        default=None,
+        description="Weather information"
+    )
+    location: Optional[List[Location]] = Field(
+        default=None,
+        description="User location information"
+    )
+    user_id: Optional[str] = Field(
+        default=None,
+        description="Current user ID"
+    )
+    user_historical_behaviors: Optional[Dict[str, Any]] = Field(
+        default=None,
+        description="User historical behaviors"
     )
 
     def get_statistics(self) -> dict[str, Any]:

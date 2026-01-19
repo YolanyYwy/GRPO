@@ -346,9 +346,6 @@ class GRPOTrainer:
             # 1. Generate multiple response trajectories
             environment = self._create_environment(domain)
 
-            if self.is_main_process():
-                print(f"  → Generating {self.config.num_samples_per_prompt} trajectories...")
-
             try:
                 trajectories = self.policy.generate_responses(
                     task=task,

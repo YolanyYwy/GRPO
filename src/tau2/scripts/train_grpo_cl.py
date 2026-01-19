@@ -1,7 +1,7 @@
 """Training script for GRPO-based continual learning on agent tool-use tasks.
 
 This script provides a command-line interface for training agents using GRPO
-across multiple domains (airline, retail, telecom) in a continual learning setting.
+across multiple domains (airline, retail, telecom, delivery, instore, ota) in a continual learning setting.
 
 Usage:
     # Single GPU
@@ -38,6 +38,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from tau2.continual_learning import GRPOConfig
 from tau2.continual_learning.grpo_trainer import GRPOTrainer
+
 
 def parse_args():
     """Parse command line arguments."""
@@ -182,7 +183,7 @@ def parse_args():
         type=str,
         nargs="+",
         default=["airline", "retail", "telecom"],
-        choices=["airline", "retail", "telecom"],
+        choices=["airline", "retail", "telecom", "delivery", "instore", "ota"],
         help="Order of tasks/domains for sequential training",
     )
     parser.add_argument(
@@ -195,7 +196,7 @@ def parse_args():
         "--train_split",
         type=float,
         default=0.8,
-        help="Fraction of tasks to use for training (rest for evaluation)",
+        help="Fraction of tasks to use for training (rest for evaluation). Note: Ignored if train_tasks.json/test_tasks.json exist.",
     )
 
     # Logging and checkpointing

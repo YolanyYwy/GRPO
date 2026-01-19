@@ -52,15 +52,13 @@ class TaskDataLoader:
         tasks = {}
 
         for domain in self.config.task_order:
-            # Determine task file path
-            if domain == "airline":
-                task_file = self.data_root / "airline" / "tasks.json"
-            elif domain == "retail":
-                task_file = self.data_root / "retail" / "tasks.json"
-            elif domain == "telecom":
-                task_file = self.data_root / "telecom" / "tasks_hard_300.json"
-            else:
-                raise ValueError(f"Unknown domain: {domain}")
+            # Use train_tasks.json for all domains
+            task_file = self.data_root / domain / "train_tasks.json"
+
+            # Fallback to tasks.json if train_tasks.json doesn't exist
+            if not task_file.exists():
+                print(f"Warning: train_tasks.json not found for {domain}, falling back to tasks.json")
+                task_file = self.data_root / domain / "tasks.json"
 
             # Load tasks
             if not task_file.exists():
@@ -78,25 +76,46 @@ class TaskDataLoader:
 
             tasks[domain] = domain_tasks
 
-            print(f"Loaded {len(domain_tasks)} tasks from {domain} domain")
+            print(f"Loaded {len(domain_tasks)} tasks from {domain} domain (from {task_file.name})")
 
         return tasks
 
     def _split_tasks(self):
-        """Split tasks into train and eval sets."""
+        """Split tasks into train and eval sets.
+
+        Now loads eval tasks from test_tasks.json instead of random splitting.
+        """
         for domain, tasks in self.tasks_by_domain.items():
-            # Shuffle tasks for random split
-            tasks_copy = tasks.copy()
-            random.shuffle(tasks_copy)
+            # Train tasks are already loaded from train_tasks.json
+            self.train_tasks_by_domain[domain] = tasks
 
-            # Split based on train_split ratio
-            split_idx = int(len(tasks_copy) * self.config.train_split)
+            # Load eval tasks from test_tasks.json
+            test_file = self.data_root / domain / "test_tasks.json"
 
-            self.train_tasks_by_domain[domain] = tasks_copy[:split_idx]
-            self.eval_tasks_by_domain[domain] = tasks_copy[split_idx:]
+            if test_file.exists():
+                with open(test_file, "r", encoding="utf-8") as f:
+                    test_data = json.load(f)
 
-            print(f"{domain}: {len(self.train_tasks_by_domain[domain])} train, "
-                  f"{len(self.eval_tasks_by_domain[domain])} eval tasks")
+                # Convert to Task objects
+                eval_tasks = [Task(**t) for t in test_data]
+                self.eval_tasks_by_domain[domain] = eval_tasks
+
+                print(f"{domain}: {len(self.train_tasks_by_domain[domain])} train, "
+                      f"{len(self.eval_tasks_by_domain[domain])} eval tasks (from test_tasks.json)")
+            else:
+                # Fallback: use old random split method if test_tasks.json doesn't exist
+                print(f"Warning: test_tasks.json not found for {domain}, using random split")
+                tasks_copy = tasks.copy()
+                random.shuffle(tasks_copy)
+
+                split_idx = int(len(tasks_copy) * self.config.train_split)
+
+                self.train_tasks_by_domain[domain] = tasks_copy[:split_idx]
+                self.eval_tasks_by_domain[domain] = tasks_copy[split_idx:]
+
+                print(f"{domain}: {len(self.train_tasks_by_domain[domain])} train, "
+                      f"{len(self.eval_tasks_by_domain[domain])} eval tasks (random split)")
+
 
     def get_train_tasks(self, domain: str) -> list[Task]:
         """Get training tasks for a domain.
